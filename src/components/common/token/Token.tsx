@@ -1,28 +1,28 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../utils/colors';
-import {sizes} from '../../../utils/sizings';
+import { sizes } from '../../../utils/sizings';
 
 interface TokenProps {
   value?: string;
   isActive?: boolean;
 }
 
-const Token = ({value, isActive = false}: TokenProps) => {
+const Token = ({ value, isActive = false }: TokenProps) => {
   return (
     <LinearGradient
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
       colors={['#0000EA', '#7708BE']}
       style={styles.wrapButton}>
       <View
         style={[
           styles.wrapTag,
-          !isActive ? {backgroundColor: colors.mediumGray} : null,
+          !isActive ? { backgroundColor: colors.mediumGray } : null,
         ]}>
         <Text
-          style={[styles.textTag, !isActive ? {color: colors.black} : null]}>
+          style={[styles.textTag, !isActive ? { color: colors.black } : null]}>
           {value}
         </Text>
       </View>

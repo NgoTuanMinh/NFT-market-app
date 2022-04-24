@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {CONSTANT_TAG} from '../../../constant';
+import { StyleSheet, Text, View } from 'react-native';
+import { CONSTANT_TAG } from '../../../constant';
 import colors from '../../../utils/colors';
-import {sizes} from '../../../utils/sizings';
+import { sizes } from '../../../utils/sizings';
 
 interface TagProps {
   type: string;
 }
 
-const Tag = ({type}: TagProps) => {
+const Tag = ({ type }: TagProps) => {
   let name = '',
     color = '';
   if (type === CONSTANT_TAG.ALERT) {
@@ -29,7 +29,7 @@ const Tag = ({type}: TagProps) => {
   }
 
   return (
-    <View style={[styles.wrapTag, {backgroundColor: color}]}>
+    <View style={[styles.wrapTag, { backgroundColor: color }]}>
       <Text style={styles.textTag}>{name}</Text>
     </View>
   );

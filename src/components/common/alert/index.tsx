@@ -1,8 +1,8 @@
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 
 export function ShowAlert(title: string, content: string, textSuccess = 'OK') {
   setTimeout(() => {
-    Alert.alert(title, content, [{text: textSuccess, onPress: () => {}}], {
+    Alert.alert(title, content, [{ text: textSuccess, onPress: () => {} }], {
       cancelable: false,
     });
   }, 100);
@@ -30,7 +30,7 @@ export const ShowAlertCallBack = (
         },
       },
     ],
-    {cancelable: false},
+    { cancelable: false },
   );
 };
 
@@ -52,7 +52,7 @@ export const ShowAlertCallBackNotCancel = (
           },
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   }, 100);
 };
@@ -84,7 +84,7 @@ export function ShowAlertConfirm(
           style: 'cancel',
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   }, 100);
 }

@@ -1,7 +1,7 @@
-import {PixelRatio, Dimensions} from 'react-native';
-import {Platform} from 'react-native';
+import { PixelRatio, Dimensions } from 'react-native';
+import { Platform } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const realWidth = height > width ? width : height;
 const realHeight = width > height ? width : height;
 

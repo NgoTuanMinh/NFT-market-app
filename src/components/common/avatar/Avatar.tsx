@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../utils/colors';
-import {fontWeights, sizes} from '../../../utils/sizings';
+import { fontWeights, sizes } from '../../../utils/sizings';
 
 interface AvatarProps {
   urlAvatar?: string;
@@ -11,7 +11,7 @@ interface AvatarProps {
   height?: number;
 }
 
-const Avatar = ({urlAvatar, isOnline, name, height}: AvatarProps) => {
+const Avatar = ({ urlAvatar, isOnline, name, height }: AvatarProps) => {
   const styles = StyleSheet.create({
     wrapAvatar: {
       width: height,
@@ -51,12 +51,12 @@ const Avatar = ({urlAvatar, isOnline, name, height}: AvatarProps) => {
 
   const renderAvatar = () => {
     if (urlAvatar) {
-      return <Image style={styles.avatar} source={{uri: urlAvatar}} />;
+      return <Image style={styles.avatar} source={{ uri: urlAvatar }} />;
     } else {
       return (
         <LinearGradient
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           colors={['#FF9C00', '#FFDB03']}
           style={styles.wrapAvatarText}>
           <Text style={styles.avatarText}>{name?.slice(0, 1)}</Text>

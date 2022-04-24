@@ -7,7 +7,7 @@ interface CheckBoxProps {
   isSquare?: boolean;
 }
 
-const CheckBox = ({onPress, isSquare = false}: CheckBoxProps) => {
+const CheckBox = ({ onPress, isSquare = false }: CheckBoxProps) => {
   return (
     <BouncyCheckbox
       size={25}

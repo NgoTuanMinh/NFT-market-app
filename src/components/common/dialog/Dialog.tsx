@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { Button, Dialog, Paragraph, Portal } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { dialogActions, selectContentDialog, selectOnSubmitDialog, selectVisibleDialog } from '../../../store/reducers/dialogReducer';
+import {
+  dialogActions,
+  selectContentDialog,
+  selectOnSubmitDialog,
+  selectVisibleDialog,
+} from '../../../store/reducers/dialogReducer';
 
 const DialogCommon = () => {
-
   const dispatch = useDispatch();
 
   const hideDialog = () => {
     dispatch(dialogActions.hideDialog());
-  }
+  };
 
   const visible = useSelector(selectVisibleDialog);
   const onSubmit = useSelector(selectOnSubmitDialog);
@@ -26,9 +30,10 @@ const DialogCommon = () => {
 
         <Dialog.Actions>
           <Button onPress={hideDialog}>Cancel</Button>
-          {onSubmit && <Button onPress={onSubmit}>{content?.titleSubmit || 'Ok'}</Button>}
+          {onSubmit && (
+            <Button onPress={onSubmit}>{content?.titleSubmit || 'Ok'}</Button>
+          )}
         </Dialog.Actions>
-
       </Dialog>
     </Portal>
   );

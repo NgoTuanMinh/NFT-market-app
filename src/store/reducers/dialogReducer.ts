@@ -12,7 +12,7 @@ export interface PayloadState {
     title?: string;
     content?: string;
     titleSubmit?: string;
-  }
+  };
 }
 
 const initialState: DialogState = {
@@ -29,8 +29,8 @@ const dialogSlice = createSlice({
       state.payload = action.payload;
     },
     hideDialog(state) {
-      state.visible = false
-    }
+      state.visible = false;
+    },
   },
 });
 // Action
@@ -38,8 +38,10 @@ export const dialogActions = dialogSlice.actions;
 
 // Selector
 export const selectVisibleDialog = (state: RootState) => state.dialog.visible;
-export const selectOnSubmitDialog = (state: RootState) => state?.dialog?.payload?.onSubmit;
-export const selectContentDialog = (state: RootState) => state?.dialog?.payload?.content;
+export const selectOnSubmitDialog = (state: RootState) =>
+  state?.dialog?.payload?.onSubmit;
+export const selectContentDialog = (state: RootState) =>
+  state?.dialog?.payload?.content;
 
 // Reducers
 const dialogReducer = dialogSlice.reducer;

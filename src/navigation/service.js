@@ -14,6 +14,6 @@ export function navigateAndSetToTop(screenName) {
   /*Clear and set screenName on top of stack*/
   navigationRef.current?.reset({
     index: 0,
-    routes: [{name: screenName}],
+    routes: [{ name: screenName }],
   });
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-paper';
+import { Image, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import colors from '../../utils/colors';
-import {fontWeights, sizes} from '../../utils/sizings';
+import { fontWeights, sizes } from '../../utils/sizings';
 
 interface IProps {
   imageUrl: string;
@@ -12,11 +12,16 @@ interface IProps {
   reservePrice: number;
 }
 
-const HotBid = ({imageUrl, nameProduct, highestBid, reservePrice}: IProps) => {
+const HotBid = ({
+  imageUrl,
+  nameProduct,
+  highestBid,
+  reservePrice,
+}: IProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapImage}>
-        <Image source={{uri: imageUrl}} style={styles.image} />
+        <Image source={{ uri: imageUrl }} style={styles.image} />
       </View>
 
       <View style={styles.wrapInfo}>

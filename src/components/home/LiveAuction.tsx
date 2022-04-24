@@ -1,10 +1,10 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from 'react-native-paper';
-import {useCountdown} from '../../hooks/countdown';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useCountdown } from '../../hooks/countdown';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
-import {fontWeights, sizes} from '../../utils/sizings';
+import { fontWeights, sizes } from '../../utils/sizings';
 import Avatar from '../common/avatar/Avatar';
 
 interface IProps {
@@ -41,7 +41,7 @@ const LiveAuction = ({
         <View style={styles.wrapInfo}>
           <View style={styles.wrapImage}>
             <TouchableOpacity onPress={viewAuction}>
-              <Image source={{uri: imageUrl}} style={styles.image} />
+              <Image source={{ uri: imageUrl }} style={styles.image} />
             </TouchableOpacity>
           </View>
 

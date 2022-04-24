@@ -1,10 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import {goback} from '../../../navigation/service';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { goback } from '../../../navigation/service';
 import colors from '../../../utils/colors';
-import {sizes} from '../../../utils/sizings';
+import { sizes } from '../../../utils/sizings';
 
-export default function Header({title, isBackButton = true}: any) {
+export default function Header({ title, isBackButton = true }: any) {
   return (
     <View style={styles.headerWithTitleContainer}>
       {isBackButton && (

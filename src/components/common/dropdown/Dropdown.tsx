@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import colors from '../../../utils/colors';
-import {sizes} from '../../../utils/sizings';
+import { sizes } from '../../../utils/sizings';
 import { verifyModelIphone } from '../../../utils/validation';
 
 interface DropdownProps {
@@ -16,7 +16,7 @@ interface DropdownItemProps {
   value: any;
 }
 
-const DropdownCommon = ({onChange, items, placeHolder}: DropdownProps) => {
+const DropdownCommon = ({ onChange, items, placeHolder }: DropdownProps) => {
   const isIOS = verifyModelIphone();
 
   return (
@@ -26,9 +26,7 @@ const DropdownCommon = ({onChange, items, placeHolder}: DropdownProps) => {
       placeholder={placeHolder}
       style={pickerSelectStyles}
       Icon={() => {
-        return (
-          isIOS 
-          ? 
+        return isIOS ? (
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -45,9 +43,7 @@ const DropdownCommon = ({onChange, items, placeHolder}: DropdownProps) => {
               right: sizes.size_10,
             }}
           />
-          :
-          null
-        );
+        ) : null;
       }}
     />
   );

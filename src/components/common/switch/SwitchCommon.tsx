@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch} from 'react-native';
+import { Switch } from 'react-native';
 import colors from '../../../utils/colors';
 
 interface SwitchCommonProps {
@@ -7,10 +7,10 @@ interface SwitchCommonProps {
   isEnabled: boolean;
 }
 
-const SwitchCommon = ({onChange, isEnabled}: SwitchCommonProps) => {
+const SwitchCommon = ({ onChange, isEnabled }: SwitchCommonProps) => {
   return (
     <Switch
-      trackColor={{false: colors.gray, true: colors.accentColor}}
+      trackColor={{ false: colors.gray, true: colors.accentColor }}
       thumbColor={isEnabled ? colors.white : colors.white}
       ios_backgroundColor="#3e3e3e"
       onValueChange={onChange}

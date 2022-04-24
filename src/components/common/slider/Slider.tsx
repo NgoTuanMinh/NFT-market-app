@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {sizes} from '../../../utils/sizings';
+import { sizes } from '../../../utils/sizings';
 import Slider from '@react-native-community/slider';
 import colors from '../../../utils/colors';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface SliderCustomProps {
   onChange: (e: any) => void;
@@ -49,7 +49,8 @@ const SliderCustom = ({
       <Text style={[styles.textValueDefault, styles.textValueRight]}>
         {maximumValue}
       </Text>
-      <Text style={[styles.textValue, {marginLeft: `${renderMarginLeft()}%`}]}>
+      <Text
+        style={[styles.textValue, { marginLeft: `${renderMarginLeft()}%` }]}>
         {value}
       </Text>
     </View>

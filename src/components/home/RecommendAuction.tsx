@@ -1,9 +1,9 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-paper';
+import { Image, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
-import {fontWeights, sizes} from '../../utils/sizings';
+import { fontWeights, sizes } from '../../utils/sizings';
 import Avatar from '../common/avatar/Avatar';
 import ButtonCommon from '../common/buttons/commonButton/CommonButton';
 
@@ -37,7 +37,7 @@ const RecommendAuction = ({
       <View style={styles.wrapper}>
         <View style={styles.wrapInfo}>
           <View style={styles.wrapImage}>
-            <Image source={{uri: imageUrl}} style={styles.image} />
+            <Image source={{ uri: imageUrl }} style={styles.image} />
           </View>
 
           <Text style={styles.nameProduct}>{nameProduct}</Text>
@@ -69,7 +69,7 @@ const RecommendAuction = ({
       </View>
 
       <ButtonCommon title="Place a bid" onPress={placeABid} />
-      <View style={{marginBottom: sizes.size_12}} />
+      <View style={{ marginBottom: sizes.size_12 }} />
       <ButtonCommon
         title="View art work"
         onPress={viewArtWork}

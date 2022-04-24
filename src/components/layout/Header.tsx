@@ -1,7 +1,7 @@
-import {Image, StyleSheet, View} from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import React from 'react';
 import images from '../../utils/images';
-import {isIphoneXorAbove, sizes} from '../../utils/sizings';
+import { isIphoneXorAbove, sizes } from '../../utils/sizings';
 import colors from '../../utils/colors';
 
 export default function Header() {

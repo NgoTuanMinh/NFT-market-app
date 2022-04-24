@@ -7,17 +7,17 @@ import fr from './locales/fr';
 const locales = RNLocalize.getLocales();
 
 if (Array.isArray(locales)) {
-	I18n.locale = locales[0].languageCode;
+  I18n.locale = locales[0].languageCode;
 }
 
-export const changeLaguage = (languageKey) => {
-	I18n.locale = languageKey;
+export const changeLaguage = languageKey => {
+  I18n.locale = languageKey;
 };
 
 I18n.fallbacks = true;
 I18n.translations = {
-	fr,
-	en,
+  fr,
+  en,
 };
 
 export default I18n;

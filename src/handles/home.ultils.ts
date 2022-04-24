@@ -10,7 +10,6 @@ interface Utils {
 }
 
 export default function HomeUtils(): Utils {
-  
   // render tag
   const renderTags = (tags?: string[]) => {
     let newTags: string[] = [];
@@ -34,6 +33,6 @@ export default function HomeUtils(): Utils {
     isSearch,
     valueSearch,
     loadingInterest,
-    loadingContactList
+    loadingContactList,
   };
 }
