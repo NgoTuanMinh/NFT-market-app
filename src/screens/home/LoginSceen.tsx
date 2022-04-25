@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import ButtonCommon from '../../components/common/buttons/commonButton/CommonButton';
@@ -33,7 +33,7 @@ function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={images.nftImage} style={styles.image} />
       <View style={styles.wrapInput}>
         <Text style={styles.signInTitle}>Sign In</Text>
@@ -54,7 +54,7 @@ function LoginScreen() {
         <View style={{ marginBottom: sizes.size_32 }} />
         <ButtonCommon title="Sign In" onPress={submitLogin} />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

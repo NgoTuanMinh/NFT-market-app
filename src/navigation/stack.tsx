@@ -15,6 +15,8 @@ import Header from '../components/layout/Header';
 import LoginScreen from '../screens/home/LoginSceen';
 import { getAccessToken } from '../utils/storage';
 import UploadArtScreen from '../screens/upload/UploadArtScreen';
+import { useSelector } from 'react-redux';
+import { selectSessionLogin } from '../store/reducers/authReducer';
 
 const Stack = createStackNavigator();
 const Home = createStackNavigator();
@@ -27,13 +29,20 @@ const BottomTab = createBottomTabNavigator();
 export const RootStack = () => {
   const [accessToken, setAccessToken] = useState<string>('');
 
+  const selectSession = useSelector(selectSessionLogin);
+  const { accessToken: selectAccessToken } = selectSession;
+
   useEffect(() => {
     handleGetAccessToken();
-  }, []);
+  }, [selectAccessToken]);
 
   const handleGetAccessToken = async () => {
-    const accessTokenGeted = await getAccessToken();
-    setAccessToken(accessTokenGeted);
+    if (selectAccessToken && selectAccessToken !== '') {
+      setAccessToken(selectAccessToken);
+    } else {
+      const accessTokenGeted = await getAccessToken();
+      setAccessToken(accessTokenGeted);
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
-import { ref, uploadBytesResumable, uploadBytes } from 'firebase/storage';
-
+import { Platform } from 'react-native';
+import storage from '@react-native-firebase/storage';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,20 +17,25 @@ const firebaseConfig = {
   measurementId: 'G-SD41HK00GC',
 };
 
-export const uploadFiles = async (file: any) => {
-  if (!file) {
-    return;
-  }
-  let urlFile;
-  const storeageRef = ref(firebaseStore, `/files/${file.name}`);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const uploadTask = await uploadBytesResumable(storeageRef, file);
-  await uploadBytes(storeageRef, file).then(snapshot => {
-    console.log('Uploaded a blob or file!', snapshot);
-    const pathSlice = snapshot.metadata.fullPath.split('/')[1];
-    urlFile = `https://firebasestorage.googleapis.com/v0/b/${snapshot.metadata.bucket}/o/files%2F${pathSlice}?alt=media`;
+export const uploadFiles = async (fileUri: any) => {  
+  const filename = fileUri.substring(fileUri.lastIndexOf('/') + 1);
+  const uploadUri = Platform.OS === 'ios' ? fileUri.replace('file://', '') : fileUri;
+  const imageRef = storage()
+  .ref(filename)
+  const task = imageRef.putFile(uploadUri);
+  task.on('state_changed', snapshot => {
+    // setTransferred(
+    //   Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+    // );
+    // console.log('snapShot=============', snapshot);
   });
-  return urlFile;
+  try {
+    await task;
+    const url = await imageRef.getDownloadURL().catch((error) => { throw error });
+    return url;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // Initialize Firebase

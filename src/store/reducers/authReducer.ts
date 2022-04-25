@@ -4,7 +4,7 @@ import { LoginInput, LoginOutput } from '../../types/authentication';
 export interface Session {
   accessToken: string;
   refreshToken: string;
-  expireTime: number;
+  expireTime: number | null;
 }
 
 export interface AuthState {
@@ -37,6 +37,17 @@ const authSlice = createSlice({
       state.loading = false;
     },
     logout(state) {
+      state.loading = true;
+    },
+    logoutSuccess(state) {
+      state.loading = false;
+      state.session = {
+        accessToken: '',
+        refreshToken: '',
+        expireTime: null,
+      };
+    },
+    logoutFailed(state) {
       state.loading = false;
     },
   },
