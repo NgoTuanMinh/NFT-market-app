@@ -3,6 +3,7 @@ const icons = {
   profileIcon: require('../../assets/icons/user-icon.png'),
   exploreIcon: require('../../assets/icons/global-network.png'),
   uploadIcon: require('../../assets/icons/Export.png'),
+  imageIcon: require('../../assets/icons/Image.png'),
 };
 
 export default icons;

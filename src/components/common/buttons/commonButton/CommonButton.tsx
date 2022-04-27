@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   StyleProp,
   StyleSheet,
   Text,
@@ -16,6 +17,7 @@ interface ButtonProps {
   onPress: () => void;
   primary?: boolean;
   buttonStyles?: StyleProp<ViewStyle>;
+  imageSource?: any;
 }
 
 const ButtonCommon = ({
@@ -23,6 +25,7 @@ const ButtonCommon = ({
   onPress,
   primary = true,
   buttonStyles,
+  imageSource,
   ...props
 }: ButtonProps) => {
   const mainButton = (
@@ -32,8 +35,10 @@ const ButtonCommon = ({
         styles.button,
         primary ? styles.buttonPrimary : styles.buttonSecondary,
         buttonStyles,
+        imageSource && {flexDirection: 'row'}
       ]}
       {...props}>
+      {imageSource && <Image source={imageSource} style={styles.image} />}
       <Text style={primary ? styles.titlePrimary : styles.titleSecondary}>
         {title}
       </Text>
@@ -82,6 +87,12 @@ const styles = StyleSheet.create({
     fontSize: sizes.size_16,
     fontWeight: fontWeights.fontWeight_700,
   },
+  image: {
+    width: sizes.size_24,
+    height: sizes.size_24,
+    marginRight: sizes.size_8,
+    tintColor: colors.white,
+  }
 });
 
 export default ButtonCommon;

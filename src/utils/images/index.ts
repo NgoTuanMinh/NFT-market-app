@@ -10,6 +10,7 @@ const images = {
   external: require('../../assets/images/external.png'),
   iconStar: require('../../assets/images/icon-star.png'),
   image1: require('../../assets/images/image-1.png'),
+  calendar: require('../../assets/images/calendar.png'),
   emojiStar: require('../../assets/images/emoji-star.png'),
   nftImage: require('../../assets/images/nft-image.jpeg'),
   test: require('../../assets/images/test.jpg'),

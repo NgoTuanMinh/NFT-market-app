@@ -17,6 +17,7 @@ import { getAccessToken } from '../utils/storage';
 import UploadArtScreen from '../screens/upload/UploadArtScreen';
 import { useSelector } from 'react-redux';
 import { selectSessionLogin } from '../store/reducers/authReducer';
+import CreateAuctionScreen from '../screens/upload/CreateAuction';
 
 const Stack = createStackNavigator();
 const Home = createStackNavigator();
@@ -124,6 +125,11 @@ const UploadStack = () => {
   return (
     <Upload.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
+      <Upload.Screen
+      name={ScreenName.CREATE_AUCTION_SCREEN}
+      component={CreateAuctionScreen}
+      options={{ headerShown: false }}
+      />
       <Upload.Screen
         name={ScreenName.UPLOAD_SCREEN}
         component={UploadArtScreen}

@@ -10,6 +10,8 @@ interface InputTextProps {
   name?: string;
   type?: string;
   placeHolder?: string;
+  numberOfLines?: number;
+  style?: any;
 }
 
 const InputText = ({
@@ -19,11 +21,13 @@ const InputText = ({
   name,
   type = 'text',
   placeHolder,
+  numberOfLines = 1,
+  style,
 }: InputTextProps) => {
   return (
     <View style={styles.wrapInput}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, {...style}]}
         label={label}
         onChangeText={(textValue: string) => onChange(textValue, name)}
         value={value}
@@ -34,6 +38,8 @@ const InputText = ({
         keyboardType={type === 'number' ? 'numeric' : 'default'}
         placeholder={placeHolder}
         autoCapitalize="none"
+        multiline={true}
+        numberOfLines={numberOfLines}
       />
     </View>
   );
@@ -42,7 +48,6 @@ const InputText = ({
 const styles = StyleSheet.create({
   wrapInput: {
     width: '100%',
-    height: sizes.size_56,
   },
   input: {
     borderRadius: sizes.size_10,

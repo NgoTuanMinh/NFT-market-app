@@ -1,30 +1,89 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import ButtonCommon from '../../components/common/buttons/commonButton/CommonButton';
 import InputFile from '../../components/common/inputFile/InputFile';
+import InputText from '../../components/common/inputText/InputText';
 import UploadArtUtils from '../../handles/uploadArt.ultils';
-import { sizes } from '../../utils/sizings';
+import colors from '../../utils/colors';
+import icons from '../../utils/icons/icons';
+import { fontWeights, sizes } from '../../utils/sizings';
 
 function UploadArtScreen() {
   const uploadArtUtils = UploadArtUtils();
-  const { filePath, setFilePath, uploadFile } = uploadArtUtils;
+  const {
+    filePath,
+    setFilePath,
+    uploadFile,
+    itemName,
+    onChangeItemName,
+    onChangeTags,
+    tags,
+    onChangeDescription,
+    description,
+    createProduct,
+  } = uploadArtUtils;
 
   return (
-    <View style={styles.container}>
-      <Text>Upload art screen</Text>
+    <ScrollView style={styles.container}>
+      {/* <Text>Upload art screen</Text>
       <InputFile filePath={filePath} setFilePath={setFilePath} />
-      <ButtonCommon title="Upload file to firebase" onPress={uploadFile} />
-    </View>
+      <ButtonCommon title="Upload file to firebase" onPress={uploadFile} /> */}
+      <Text style={styles.title}>Upload Artwork</Text>
+      <InputFile filePath={filePath} setFilePath={setFilePath} />
+      <Text style={styles.infoTitle}>Information</Text>
+      <InputText
+        onChange={onChangeItemName}
+        value={itemName}
+        label='Item name'
+      />
+      <View style={{marginBottom: sizes.size_12,}} />
+      <InputText
+        onChange={onChangeTags}
+        value={tags}
+        label='Tag'
+      />
+      <View style={{marginBottom: sizes.size_12,}} />
+      <InputText
+        onChange={onChangeDescription}
+        value={description}
+        label='Description'
+        numberOfLines={4}
+        style={{height: 120}}
+      />
+      <View style={{marginBottom: sizes.size_24,}} />
+      <ButtonCommon
+        onPress={createProduct}
+        title='Upload'
+        imageSource={icons.uploadIcon}
+      />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: sizes.size_100,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    padding: sizes.size_16,
+    backgroundColor: colors.grayBackground,
   },
+  title: {
+    fontSize: sizes.size_24,
+    lineHeight: sizes.size_32,
+    fontWeight: fontWeights.fontWeight_700,
+    color: colors.grayBody,
+    marginTop: sizes.size_16,
+    marginBottom: sizes.size_16,
+  },
+  infoTitle: {
+    fontSize: sizes.size_14,
+    lineHeight: sizes.size_20,
+    fontWeight: fontWeights.fontWeight_700,
+    color: colors.grayBody,
+    marginVertical: sizes.size_8,
+  }
 });
 
 export default UploadArtScreen;
