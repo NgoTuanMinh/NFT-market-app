@@ -1,4 +1,4 @@
-import { Artwork } from "./artwork";
+import { Artwork } from './artwork';
 
 export interface LoginInput {
   userName: string;

@@ -17,11 +17,11 @@ const firebaseConfig = {
   measurementId: 'G-SD41HK00GC',
 };
 
-export const uploadFiles = async (fileUri: any) => {  
+export const uploadFiles = async (fileUri: any) => {
   const filename = fileUri.substring(fileUri.lastIndexOf('/') + 1);
-  const uploadUri = Platform.OS === 'ios' ? fileUri.replace('file://', '') : fileUri;
-  const imageRef = storage()
-  .ref(filename)
+  const uploadUri =
+    Platform.OS === 'ios' ? fileUri.replace('file://', '') : fileUri;
+  const imageRef = storage().ref(filename);
   const task = imageRef.putFile(uploadUri);
   task.on('state_changed', snapshot => {
     // setTransferred(
@@ -31,7 +31,9 @@ export const uploadFiles = async (fileUri: any) => {
   });
   try {
     await task;
-    const url = await imageRef.getDownloadURL().catch((error) => { throw error });
+    const url = await imageRef.getDownloadURL().catch(error => {
+      throw error;
+    });
     return url;
   } catch (e) {
     console.error(e);

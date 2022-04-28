@@ -126,9 +126,9 @@ const UploadStack = () => {
     <Upload.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
       <Upload.Screen
-      name={ScreenName.CREATE_AUCTION_SCREEN}
-      component={CreateAuctionScreen}
-      options={{ headerShown: false }}
+        name={ScreenName.CREATE_AUCTION_SCREEN}
+        component={CreateAuctionScreen}
+        options={{ headerShown: false }}
       />
       <Upload.Screen
         name={ScreenName.UPLOAD_SCREEN}

@@ -34,31 +34,31 @@ function UploadArtScreen() {
       <InputText
         onChange={onChangeItemName}
         value={itemName}
-        label='Item name'
-        style={{backgroundColor: colors.white}}
+        label="Item name"
+        style={{ backgroundColor: colors.white }}
       />
-      <View style={{marginBottom: sizes.size_12,}} />
+      <View style={{ marginBottom: sizes.size_12 }} />
       <InputText
         onChange={onChangeTags}
         value={tags}
-        label='Tag'
-        style={{backgroundColor: colors.white}}
+        label="Tag"
+        style={{ backgroundColor: colors.white }}
       />
-      <View style={{marginBottom: sizes.size_12,}} />
+      <View style={{ marginBottom: sizes.size_12 }} />
       <InputText
         onChange={onChangeDescription}
         value={description}
-        label='Description'
+        label="Description"
         numberOfLines={4}
-        style={{height: 120, backgroundColor: colors.white}}
+        style={{ height: 120, backgroundColor: colors.white }}
       />
-      <View style={{marginBottom: sizes.size_24,}} />
+      <View style={{ marginBottom: sizes.size_24 }} />
       <ButtonCommon
         onPress={createProduct}
-        title='Upload'
+        title="Upload"
         imageSource={icons.uploadIcon}
       />
-      <View style={{marginBottom: sizes.size_32,}} />
+      <View style={{ marginBottom: sizes.size_32 }} />
     </ScrollView>
   );
 }
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: fontWeights.fontWeight_700,
     color: colors.grayBody,
     marginVertical: sizes.size_8,
-  }
+  },
 });
 
 export default UploadArtScreen;

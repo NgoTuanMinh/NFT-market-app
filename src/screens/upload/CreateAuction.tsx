@@ -37,28 +37,30 @@ function CreateAuctionScreen() {
       <View style={styles.wrapBars}>
         <View style={styles.wrapButton}>
           <ButtonCommon
-            title='Fixed price'
+            title="Fixed price"
             onPress={() => setIndexScreen(0)}
             primary={indexScreen === 0}
-            buttonStyles={{borderWidth: 0}}
+            buttonStyles={{ borderWidth: 0 }}
           />
         </View>
-        <View style={[styles.wrapButton, {marginLeft: sizes.size_12}]}>
+        <View style={[styles.wrapButton, { marginLeft: sizes.size_12 }]}>
           <ButtonCommon
-            title='Auction'
+            title="Auction"
             primary={indexScreen === 1}
             onPress={() => setIndexScreen(1)}
-            buttonStyles={{borderWidth: 0}}
+            buttonStyles={{ borderWidth: 0 }}
           />
         </View>
       </View>
 
       <View style={styles.wrapUploadHere}>
-				<Text style={styles.uploadHereTitle}>If you want to upload new artwork, </Text>
-				<TouchableOpacity onPress={() => navigate(screenName.UPLOAD_SCREEN)}>
-					<Text style={styles.uploadHereLink}>upload here.</Text>
-				</TouchableOpacity>
-			</View>
+        <Text style={styles.uploadHereTitle}>
+          If you want to upload new artwork,{' '}
+        </Text>
+        <TouchableOpacity onPress={() => navigate(screenName.UPLOAD_SCREEN)}>
+          <Text style={styles.uploadHereLink}>upload here.</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.wrapSelectImage}>
         <View style={styles.selectImage}>
@@ -70,16 +72,18 @@ function CreateAuctionScreen() {
         </View>
       </View>
 
-      {(indexScreen === 1) && <CreateNormalAuction
-        price={price}
-        onChangePrice={setPrice}
-        showDatePicker={showDatePicker}
-        setShowDatePicker={setShowDatePicker}
-        date={date}
-        setDate={setDate}
-        createAuction={createAuction}
-      />}
-      {(indexScreen === 0) && <CreateFixedAuction />}
+      {indexScreen === 1 && (
+        <CreateNormalAuction
+          price={price}
+          onChangePrice={setPrice}
+          showDatePicker={showDatePicker}
+          setShowDatePicker={setShowDatePicker}
+          date={date}
+          setDate={setDate}
+          createAuction={createAuction}
+        />
+      )}
+      {indexScreen === 0 && <CreateFixedAuction />}
 
       <ModalListArtwork
         showModalSelectImage={showModalSelectImage}
@@ -88,7 +92,6 @@ function CreateAuctionScreen() {
         setImageSelecte={setImageSelecte}
         imageSelected={imageSelected}
       />
-
     </ScrollView>
   );
 }
@@ -114,22 +117,22 @@ const styles = StyleSheet.create({
     borderWidth: sizes.size_1,
   },
   wrapUploadHere: {
-		flexDirection: 'row',
-		marginTop: sizes.size_16,
-		// paddingLeft: sizes.size_8,
-	},
-	uploadHereTitle: {
-		fontSize: sizes.size_16,
-		lineHeight: sizes.size_24,
-		fontWeight: fontWeights.fontWeight_400,
-		color: colors.grayLabel,
-	},
-	uploadHereLink: {
-		fontSize: sizes.size_16,
-		lineHeight: sizes.size_24,
-		fontWeight: fontWeights.fontWeight_500,
-		color: colors.primaryBlue,
-	},
+    flexDirection: 'row',
+    marginTop: sizes.size_16,
+    // paddingLeft: sizes.size_8,
+  },
+  uploadHereTitle: {
+    fontSize: sizes.size_16,
+    lineHeight: sizes.size_24,
+    fontWeight: fontWeights.fontWeight_400,
+    color: colors.grayLabel,
+  },
+  uploadHereLink: {
+    fontSize: sizes.size_16,
+    lineHeight: sizes.size_24,
+    fontWeight: fontWeights.fontWeight_500,
+    color: colors.primaryBlue,
+  },
   wrapSelectImage: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
   plusIcon: {
     width: sizes.size_48,
     height: sizes.size_48,
-  }
+  },
 });
 
 export default CreateAuctionScreen;

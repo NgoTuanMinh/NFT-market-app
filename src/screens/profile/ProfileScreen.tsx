@@ -13,7 +13,7 @@ function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text>Profile screen</Text>
-      <ButtonCommon title='Sign out' onPress={handleLogout}/>
+      <ButtonCommon title="Sign out" onPress={handleLogout} />
     </View>
   );
 }

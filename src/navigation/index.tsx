@@ -6,7 +6,7 @@ import { navigationRef } from './service';
 
 const AppNavigator = () => (
   <SafeAreaProvider>
-    <NavigationContainer ref={navigationRef} >
+    <NavigationContainer ref={navigationRef}>
       <RootStack />
     </NavigationContainer>
   </SafeAreaProvider>

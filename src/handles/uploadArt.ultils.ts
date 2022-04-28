@@ -23,7 +23,7 @@ export default function UploadArtUtils(): Utils {
   const [itemName, setItemName] = useState<string>('');
   const [tags, setTags] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  
+
   const dispatch = useDispatch();
 
   const uploadFile = async () => {
@@ -40,15 +40,18 @@ export default function UploadArtUtils(): Utils {
 
   const createProduct = async () => {
     const urlFile = await uploadFile();
-    const tagsConverted = tags?.replace(" ", "")?.split("#")?.filter((str: string) => str !== '');
+    const tagsConverted = tags
+      ?.replace(' ', '')
+      ?.split('#')
+      ?.filter((str: string) => str !== '');
     const data: CreateArtworkInput = {
       name: itemName,
       tags: tagsConverted,
       imageUrl: urlFile,
       description,
-    }
+    };
     dispatch(artworkActions.createArtwork(data));
-  }
+  };
 
   return {
     filePath,
