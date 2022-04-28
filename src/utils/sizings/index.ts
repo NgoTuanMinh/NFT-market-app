@@ -127,8 +127,10 @@ export const sizes = {
   size_78: size(78),
   size_79: size(79),
   size_80: size(80),
+  size_86: size(86),
   size_90: size(90),
   size_100: size(100),
+  size_120: size(120),
   size_165: size(165),
   size_150: size(150),
   size_160: size(160),
@@ -142,6 +144,7 @@ export const sizes = {
   size_360: size(360),
   size_375: size(375),
   size_400: size(400),
+  size_500: size(500),
 };
 
 type TFontWeight =

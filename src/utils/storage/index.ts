@@ -70,7 +70,7 @@ export const getRefreshToken = async () => {
   try {
     const value = await AsyncStorage.getItem(`@${REFRESH_TOKEN}:key`);
     if (value !== null) {
-      return JSON.parse(value);
+      return value;
     }
     return false;
   } catch (error) {

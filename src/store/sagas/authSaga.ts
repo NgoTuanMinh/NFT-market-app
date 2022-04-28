@@ -25,7 +25,6 @@ function* handleLogin(action: PayloadAction<LoginInput>) {
 function* handleLogout() {
   yield call(clearUserData);
   yield put(authActions.logoutSuccess());
-  navigate(screenName.LOGIN_SCREEN);
 }
 
 export default function* authSaga() {

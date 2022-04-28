@@ -14,7 +14,6 @@ function UploadArtScreen() {
   const {
     filePath,
     setFilePath,
-    uploadFile,
     itemName,
     onChangeItemName,
     onChangeTags,
@@ -36,12 +35,14 @@ function UploadArtScreen() {
         onChange={onChangeItemName}
         value={itemName}
         label='Item name'
+        style={{backgroundColor: colors.white}}
       />
       <View style={{marginBottom: sizes.size_12,}} />
       <InputText
         onChange={onChangeTags}
         value={tags}
         label='Tag'
+        style={{backgroundColor: colors.white}}
       />
       <View style={{marginBottom: sizes.size_12,}} />
       <InputText
@@ -49,7 +50,7 @@ function UploadArtScreen() {
         value={description}
         label='Description'
         numberOfLines={4}
-        style={{height: 120}}
+        style={{height: 120, backgroundColor: colors.white}}
       />
       <View style={{marginBottom: sizes.size_24,}} />
       <ButtonCommon
@@ -57,6 +58,7 @@ function UploadArtScreen() {
         title='Upload'
         imageSource={icons.uploadIcon}
       />
+      <View style={{marginBottom: sizes.size_32,}} />
     </ScrollView>
   );
 }

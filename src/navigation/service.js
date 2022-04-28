@@ -1,18 +1,19 @@
 import * as React from 'react';
+import { createNavigationContainerRef } from '@react-navigation/native';
 
-export const navigationRef = React.createRef();
+export const navigationRef = createNavigationContainerRef();
 
 export function goback() {
-  navigationRef.current?.goBack();
+  navigationRef?.goBack();
 }
 
 export function navigate(name, params) {
-  navigationRef.current?.navigate(name, params);
+  navigationRef?.navigate(name, params);
 }
 
 export function navigateAndSetToTop(screenName) {
   /*Clear and set screenName on top of stack*/
-  navigationRef.current?.reset({
+  navigationRef?.reset({
     index: 0,
     routes: [{ name: screenName }],
   });

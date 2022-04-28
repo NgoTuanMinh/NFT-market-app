@@ -2,6 +2,7 @@ import axios from 'axios';
 import to from 'await-to-js';
 import {
   getAccessToken,
+  getRefreshToken,
   saveAccessToken,
   saveRefreshToken,
 } from '../utils/storage';
@@ -16,9 +17,9 @@ const axiosClient = axios.create({
 
 // Add a request interceptor
 axiosClient.interceptors.request.use(
-  function (config) {
+  async function (config) {
     // Do something before request is sent
-    const accessToken = getAccessToken();
+    const accessToken = await getAccessToken();    
     config.headers = {
       Authorization: `Bearer ${accessToken}`,
       Accept: 'application/json',
@@ -28,6 +29,7 @@ axiosClient.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
+    console.log('error==========', error?.response?.data);
     return Promise.reject(error);
   },
 );
@@ -43,8 +45,9 @@ axiosClient.interceptors.response.use(
     const originalRequest = error.config;
     if ([401, 403].includes(error.response.status) && !originalRequest._retry) {
       originalRequest._retry = true;
+      const refreshToken = await getRefreshToken();      
       const [err, response] = await to(
-        axiosClient.get('/authentication/refresh-token'),
+        axiosClient.post('/authentication/refresh-token', {refreshToken}),
       );
       if (response && !err) {
         const { accessToken, refreshToken }: any = response;
@@ -56,6 +59,7 @@ axiosClient.interceptors.response.use(
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    console.log('error==========', error?.response?.data);
     return Promise.reject(error?.response?.data);
   },
 );
