@@ -1,4 +1,8 @@
-import { Artwork, CreateArtworkInput, LikeArtworkInput } from '../types/artwork';
+import {
+  Artwork,
+  CreateArtworkInput,
+  LikeArtworkInput,
+} from '../types/artwork';
 import { User } from '../types/authentication';
 import { PaginationParams } from '../types/pagination';
 import axiosClient from './axiosClient';
@@ -18,7 +22,7 @@ const artworkApi = {
     return axiosClient.get(url, {
       params: input,
     });
-  }
+  },
 };
 
 export default artworkApi;

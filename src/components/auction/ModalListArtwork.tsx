@@ -22,16 +22,18 @@ interface IImageItem {
   setImageSelecte: (val: number | undefined) => void;
 }
 
-const ImageItem = ({image, imageSelected, setImageSelecte}: IImageItem) => {
+const ImageItem = ({ image, imageSelected, setImageSelecte }: IImageItem) => {
   return (
-    <TouchableOpacity onPress={() => setImageSelecte(image?.id)} >
+    <TouchableOpacity onPress={() => setImageSelecte(image?.id)}>
       <View style={styles.wrapItem}>
-        <Image style={styles.itemImage} source={{uri: image?.imageUrl}} />
-        {(Number(imageSelected) === Number(image?.id)) && <Image style={styles.selectedIcon} source={icons.selectedIcon} />}
+        <Image style={styles.itemImage} source={{ uri: image?.imageUrl }} />
+        {Number(imageSelected) === Number(image?.id) && (
+          <Image style={styles.selectedIcon} source={icons.selectedIcon} />
+        )}
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const ModalListArtwork = ({
   showModalSelectImage,
@@ -39,26 +41,32 @@ const ModalListArtwork = ({
   listArtworkOwner,
   imageSelected,
   setImageSelecte,
-}: IProps) => {  
+}: IProps) => {
   return (
     <View style={styles.wrapper}>
       <Portal>
-        <Modal visible={showModalSelectImage} onDismiss={() => setShowModalSelectImage(false)} contentContainerStyle={styles.containerStyle}>    
-          <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+        <Modal
+          visible={showModalSelectImage}
+          onDismiss={() => setShowModalSelectImage(false)}
+          contentContainerStyle={styles.containerStyle}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}>
             <View style={styles.wrapModalSelect}>
-              {listArtworkOwner.map((item, idx) => 
+              {listArtworkOwner.map((item, idx) =>
                 <ImageItem
                   image={item}
                   key={idx}
                   imageSelected={imageSelected}
                   setImageSelecte={setImageSelecte}
-                />)}
+                />
+              ))}
             </View>
           </ScrollView>
           <View style={styles.button}>
             <ButtonCommon
               onPress={() => setShowModalSelectImage(false)}
-              title='Done'
+              title="Done"
             />
           </View>
         </Modal>
@@ -69,7 +77,7 @@ const ModalListArtwork = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-		flex: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -110,7 +118,7 @@ const styles = StyleSheet.create({
     width: sizes.size_160,
     position: 'absolute',
     bottom: sizes.size_12,
-  }
+  },
 });
 
 export default ModalListArtwork;

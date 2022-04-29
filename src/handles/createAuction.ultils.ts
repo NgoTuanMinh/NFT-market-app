@@ -12,7 +12,7 @@ interface Utils {
   setPrice: (val: string) => void;
   showDatePicker: boolean;
   setShowDatePicker: (val: boolean) => void;
-  date: any,
+  date: any;
   setDate: (val: any) => void;
   createAuction: () => void;
   listArtworkOwner: Artwork[];
@@ -37,7 +37,7 @@ export default function CreateAuctionUtils(): Utils {
   const dispatch = useDispatch();
 
   const listArtworkOwner = useSelector(selectListArtwork);
-  
+
   const createAuction = () => {
     if (!imageSelected || !date || !price || isNaN(Number(price))) return;
     const data: CreateAuctionInput = {
@@ -55,9 +55,11 @@ export default function CreateAuctionUtils(): Utils {
   }, []);
 
   useEffect(() => {
-    const imageDetail = listArtworkOwner.find((item: Artwork) => Number(item.id) === Number(imageSelected));
+    const imageDetail = listArtworkOwner.find(
+      (item: Artwork) => Number(item.id) === Number(imageSelected),
+    );
     setImageDetailSelected(imageDetail);
-  }, [imageSelected])
+  }, [imageSelected]);
 
   return {
     indexScreen,

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Artwork, CreateArtworkInput } from '../../types/artwork';
 
-
 export interface ArtworkState {
   loading: boolean;
   listArtworkOwner: Artwork[];

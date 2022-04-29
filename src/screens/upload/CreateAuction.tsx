@@ -38,18 +38,18 @@ function CreateAuctionScreen() {
       <View style={styles.wrapBars}>
         <View style={styles.wrapButton}>
           <ButtonCommon
-            title='Fixed price'
+            title="Fixed price"
             onPress={() => setIndexScreen(0)}
             primary={indexScreen === 0}
-            buttonStyles={{borderWidth: 0}}
+            buttonStyles={{ borderWidth: 0 }}
           />
         </View>
-        <View style={[styles.wrapButton, {marginLeft: sizes.size_12}]}>
+        <View style={[styles.wrapButton, { marginLeft: sizes.size_12 }]}>
           <ButtonCommon
-            title='Auction'
+            title="Auction"
             primary={indexScreen === 1}
             onPress={() => setIndexScreen(1)}
-            buttonStyles={{borderWidth: 0}}
+            buttonStyles={{ borderWidth: 0 }}
           />
         </View>
       </View>

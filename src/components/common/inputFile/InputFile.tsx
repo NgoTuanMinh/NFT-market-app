@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -57,12 +56,14 @@ const InputFile = ({ filePath, setFilePath }: InputFileProps) => {
 
   return (
     <View style={styles.container}>
-      {filePath?.uri && <Image source={{ uri: filePath?.uri }} style={styles.imageStyle} />}
+      {filePath?.uri && (
+        <Image source={{ uri: filePath?.uri }} style={styles.imageStyle} />
+      )}
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.buttonStyle}
         onPress={() => chooseFile('photo')}>
-        <Image source={icons.imageIcon} style={styles.uploadIcon}/>
+        <Image source={icons.imageIcon} style={styles.uploadIcon} />
         <Text style={styles.textStyle}>Choose Image</Text>
       </TouchableOpacity>
     </View>
@@ -100,5 +101,5 @@ const styles = StyleSheet.create({
   uploadIcon: {
     width: sizes.size_24,
     height: sizes.size_24,
-  }
+  },
 });

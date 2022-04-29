@@ -19,7 +19,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   async function (config) {
     // Do something before request is sent
-    const accessToken = await getAccessToken();    
+    const accessToken = await getAccessToken();
     config.headers = {
       Authorization: `Bearer ${accessToken}`,
       Accept: 'application/json',
@@ -45,9 +45,9 @@ axiosClient.interceptors.response.use(
     const originalRequest = error.config;
     if ([401, 403].includes(error.response.status) && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = await getRefreshToken();      
+      const refreshToken = await getRefreshToken();
       const [err, response] = await to(
-        axiosClient.post('/authentication/refresh-token', {refreshToken}),
+        axiosClient.post('/authentication/refresh-token', { refreshToken }),
       );
       if (response && !err) {
         const { accessToken, refreshToken }: any = response;

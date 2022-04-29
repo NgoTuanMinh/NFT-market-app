@@ -27,7 +27,7 @@ const InputText = ({
   return (
     <View style={styles.wrapInput}>
       <TextInput
-        style={[styles.input, {...style}]}
+        style={[styles.input, { ...style }]}
         label={label}
         onChangeText={(textValue: string) => onChange(textValue, name)}
         value={value}

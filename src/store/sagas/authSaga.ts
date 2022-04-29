@@ -5,7 +5,11 @@ import authenticationApi from '../../api/authenApi';
 import { navigate } from '../../navigation/service';
 import { LoginInput, LoginOutput } from '../../types/authentication';
 import screenName from '../../utils/screenName';
-import { clearUserData, saveAccessToken, saveRefreshToken } from '../../utils/storage';
+import {
+  clearUserData,
+  saveAccessToken,
+  saveRefreshToken,
+} from '../../utils/storage';
 import { authActions } from '../reducers/authReducer';
 import { userActions } from '../reducers/userReducer';
 

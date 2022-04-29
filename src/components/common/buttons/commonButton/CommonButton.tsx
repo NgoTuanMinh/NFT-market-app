@@ -35,7 +35,7 @@ const ButtonCommon = ({
         styles.button,
         primary ? styles.buttonPrimary : styles.buttonSecondary,
         buttonStyles,
-        imageSource && {flexDirection: 'row'}
+        imageSource && { flexDirection: 'row' },
       ]}
       {...props}>
       {imageSource && <Image source={imageSource} style={styles.image} />}
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     height: sizes.size_24,
     marginRight: sizes.size_8,
     tintColor: colors.white,
-  }
+  },
 });
 
 export default ButtonCommon;

@@ -3,14 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { sizes } from '../../utils/sizings';
 
-interface IProps {
+interface IProps {}
 
-}
-
-const CreateFixedAuction = ({
-  
-}: IProps) => {
-
+const CreateFixedAuction = ({}: IProps) => {
   return (
     <View style={styles.wrapper}>
       <Text>Create Fixed Auction</Text>
@@ -20,9 +15,9 @@ const CreateFixedAuction = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
