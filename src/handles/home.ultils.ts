@@ -1,38 +1,69 @@
 /* eslint-disable no-useless-catch */
 
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { navigate } from "../navigation/service";
+import { auctionActions, selectListAuction } from "../store/reducers/auctionReducer";
+import { selectUser, userActions } from "../store/reducers/userReducer";
+import { Artwork } from "../types/artwork";
+import { Auction } from "../types/auction";
+import { User } from "../types/authentication";
+import screenName from "../utils/screenName";
+import { getUserData } from "../utils/storage";
+
 interface Utils {
-  renderTags: (tags?: string[]) => string[];
-  interestPopular: string[];
-  isSearch: boolean;
-  valueSearch: string;
-  loadingInterest: boolean;
-  loadingContactList: boolean;
+  listAuction: Auction[];
+  goToDetailSold: (id: number) => void;
+  checkLikedRecommendAuction: (auction: Auction) => boolean;
 }
 
 export default function HomeUtils(): Utils {
-  // render tag
-  const renderTags = (tags?: string[]) => {
-    let newTags: string[] = [];
-    if (tags) {
-      const tagTerm = [...tags];
-      if (tagTerm.length <= 0) {
-        newTags = [...interestPopular];
-      } else {
-        if (tagTerm.length > 20) {
-          newTags = tagTerm.slice(0, 20);
-        } else {
-          newTags = tagTerm;
-        }
-      }
-    }
-    return newTags;
+  const dispatch = useDispatch();
+  const [userInfo, setUserInfo] = useState<User>();
+
+  const listAuction = useSelector(selectListAuction);
+  const userInfoRedux = useSelector(selectUser);
+
+  useEffect(() => {
+    dispatch(auctionActions.getListAuction());
+    dispatch(userActions.getUser());
+  }, [dispatch]);
+
+  const goToDetailSold = (id: number) => {
+    navigate(screenName.DETAIL_AUCTION_SCREEN, {
+      auctionId: id,
+    });
   };
 
+  useEffect(() => {
+    handleGetUser();
+  }, [userInfoRedux])
+
+  const handleGetUser = async() => {
+    if (userInfoRedux) {
+      setUserInfo(userInfoRedux);
+    } else {
+      const dataUser = await getUserData();    
+      setUserInfo(dataUser);
+    }
+  }
+
+  const checkLikedRecommendAuction = (auction: Auction): boolean => {
+    let checked = false;
+    if (userInfo?.favouriteProduct && userInfo?.favouriteProduct?.length <= 0) return checked;
+    userInfo?.favouriteProduct?.map((product: Artwork) => {
+      
+      if (Number(product?.id) === Number(auction?.product?.id)) {
+        checked = true;
+        return;
+      }
+    })
+    return checked;
+  }
+
   return {
-    renderTags,
-    isSearch,
-    valueSearch,
-    loadingInterest,
-    loadingContactList,
+    listAuction,
+    goToDetailSold,
+    checkLikedRecommendAuction,
   };
 }

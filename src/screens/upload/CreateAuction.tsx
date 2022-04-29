@@ -30,10 +30,11 @@ function CreateAuctionScreen() {
     showModalSelectImage,
     imageSelected,
     setImageSelecte,
+    imageDetailSelected,
   } = createAuctionUtils;
 
   return (
-    <ScrollView style={styles.container}>
+    <>
       <View style={styles.wrapBars}>
         <View style={styles.wrapButton}>
           <ButtonCommon
@@ -52,44 +53,55 @@ function CreateAuctionScreen() {
           />
         </View>
       </View>
+      <ScrollView style={styles.container} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} >
 
-      <View style={styles.wrapUploadHere}>
-				<Text style={styles.uploadHereTitle}>If you want to upload new artwork, </Text>
-				<TouchableOpacity onPress={() => navigate(screenName.UPLOAD_SCREEN)}>
-					<Text style={styles.uploadHereLink}>upload here.</Text>
-				</TouchableOpacity>
-			</View>
-
-      <View style={styles.wrapSelectImage}>
-        <View style={styles.selectImage}>
-          <TouchableOpacity onPress={() => setShowModalSelectImage(true)}>
-            <View style={styles.wrapPlusIcon}>
-              <Image source={icons.plusIcon} style={styles.plusIcon} />
-            </View>
+        <View style={styles.wrapUploadHere}>
+          <Text style={styles.uploadHereTitle}>If you want to upload new artwork, </Text>
+          <TouchableOpacity onPress={() => navigate(screenName.UPLOAD_SCREEN)}>
+            <Text style={styles.uploadHereLink}>upload here.</Text>
           </TouchableOpacity>
         </View>
-      </View>
 
-      {(indexScreen === 1) && <CreateNormalAuction
-        price={price}
-        onChangePrice={setPrice}
-        showDatePicker={showDatePicker}
-        setShowDatePicker={setShowDatePicker}
-        date={date}
-        setDate={setDate}
-        createAuction={createAuction}
-      />}
-      {(indexScreen === 0) && <CreateFixedAuction />}
+        <View style={styles.wrapSelectImage}>
+          <View style={styles.selectImage}>
+            {!imageDetailSelected && 
+            <TouchableOpacity onPress={() => setShowModalSelectImage(true)}>
+              <View style={styles.wrapPlusIcon}>
+                <Image source={icons.plusIcon} style={styles.plusIcon} />
+              </View>
+            </TouchableOpacity>}
+            {imageDetailSelected && 
+            <TouchableOpacity onPress={() => setShowModalSelectImage(true)}>
+              <View style={styles.wrapPlusIcon}>
+                <Image source={{uri: imageDetailSelected?.imageUrl}} style={styles.imageSelected} />
+                <Image source={icons.replaceIcon} style={[styles.plusIcon, styles.replaceIcon]} />
+              </View>
+            </TouchableOpacity>
+            }
+          </View>
+        </View>
 
-      <ModalListArtwork
-        showModalSelectImage={showModalSelectImage}
-        setShowModalSelectImage={setShowModalSelectImage}
-        listArtworkOwner={listArtworkOwner}
-        setImageSelecte={setImageSelecte}
-        imageSelected={imageSelected}
-      />
+        {(indexScreen === 1) && <CreateNormalAuction
+          price={price}
+          onChangePrice={setPrice}
+          showDatePicker={showDatePicker}
+          setShowDatePicker={setShowDatePicker}
+          date={date}
+          setDate={setDate}
+          createAuction={createAuction}
+        />}
+        {(indexScreen === 0) && <CreateFixedAuction />}
 
-    </ScrollView>
+        <ModalListArtwork
+          showModalSelectImage={showModalSelectImage}
+          setShowModalSelectImage={setShowModalSelectImage}
+          listArtworkOwner={listArtworkOwner}
+          setImageSelecte={setImageSelecte}
+          imageSelected={imageSelected}
+        />
+
+      </ScrollView>
+    </>
   );
 }
 
@@ -104,6 +116,7 @@ const styles = StyleSheet.create({
     padding: sizes.size_8,
     backgroundColor: colors.white,
     borderRadius: sizes.size_24,
+    marginTop: sizes.size_8,
   },
   wrapButton: {
     borderRadius: sizes.size_24,
@@ -115,7 +128,7 @@ const styles = StyleSheet.create({
   },
   wrapUploadHere: {
 		flexDirection: 'row',
-		marginTop: sizes.size_16,
+		// marginTop: sizes.size_16,
 		// paddingLeft: sizes.size_8,
 	},
 	uploadHereTitle: {
@@ -151,10 +164,22 @@ const styles = StyleSheet.create({
     borderRadius: sizes.size_24,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
   plusIcon: {
     width: sizes.size_48,
     height: sizes.size_48,
+  },
+  imageSelected: {
+    width: sizes.size_200,
+    height: sizes.size_200,
+    borderRadius: sizes.size_24,
+  },
+  replaceIcon: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    tintColor: colors.white,
   }
 });
 

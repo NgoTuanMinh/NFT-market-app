@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     overflow: 'hidden',
+    paddingTop: sizes.size_12,
   },
   containerStyle: {
     backgroundColor: colors.white,

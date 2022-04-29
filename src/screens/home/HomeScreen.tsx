@@ -7,9 +7,10 @@ import LiveAuction from '../../components/home/LiveAuction';
 import RecommendAuction from '../../components/home/RecommendAuction';
 import Banner from '../../components/layout/Banner';
 import Footer from '../../components/layout/Footer';
+import HomeUtils from '../../handles/home.ultils';
+import { Auction } from '../../types/auction';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
-import screenName from '../../utils/screenName';
 import { fontWeights, sizes } from '../../utils/sizings';
 
 function HomeScreen({ navigation }: any) {
@@ -17,12 +18,12 @@ function HomeScreen({ navigation }: any) {
     console.log('123');
   };
 
-  const goToDetailSold = (id: number) => {
-    navigation.navigate(screenName.DETAIL_AUCTION_SCREEN, {
-      auctionId: id,
-    });
-  };
+  const homeUtils = HomeUtils();
+  const { goToDetailSold, listAuction = [], checkLikedRecommendAuction } = homeUtils;
 
+  const recommendAuction = listAuction[0];
+  const listAuctionOther = listAuction.slice(1);
+  
   return (
     <View style={styles.container}>
       <ScrollView
@@ -31,14 +32,12 @@ function HomeScreen({ navigation }: any) {
         <Banner />
 
         <RecommendAuction
-          imageUrl={'https://wallpaperaccess.com/full/7280.jpg'}
-          avatarUrlCreator={
-            'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q='
-          }
-          nameCreator="Pawel Czerwinski"
-          nameProduct="Silent Wave"
-          liked={false}
-          reservePrice={1.5}
+          imageUrl={recommendAuction?.product?.imageUrl}
+          avatarUrlCreator={recommendAuction?.seller?.userInformation?.profileImage || ''}
+          nameCreator={recommendAuction?.seller?.userInformation?.displayName || ''}
+          nameProduct={recommendAuction?.product?.name}
+          liked={checkLikedRecommendAuction(recommendAuction)}
+          reservePrice={recommendAuction?.sessionInformation?.reservePrice}
           viewArtWork={onPress}
           placeABid={onPress}
           likeAuction={onPress}
@@ -49,35 +48,21 @@ function HomeScreen({ navigation }: any) {
           <Text style={styles.liveAuctionTitle}>Live auctions</Text>
         </View>
 
-        <LiveAuction
-          timeEnd={'2022-04-23T16:23:49.000Z'}
-          imageUrl={'https://wallpaperaccess.com/full/391239.jpg'}
-          avatarUrlCreator={
-            'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q='
-          }
-          nameCreator="Pawel Czerwinski"
-          nameProduct="Silent Wave"
-          liked={false}
-          currentBid={1.5}
-          viewAuction={() => goToDetailSold(1)}
-          likeAuction={onPress}
-          isOnline={true}
-        />
-
-        <LiveAuction
-          timeEnd={'2022-04-22T08:33:26.677Z'}
-          imageUrl={'https://wallpaperaccess.com/full/391240.jpg'}
-          avatarUrlCreator={
-            'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q='
-          }
-          nameCreator="Pawel Czerwinski"
-          nameProduct="Silent Wave"
-          liked={false}
-          currentBid={1.5}
-          viewAuction={() => goToDetailSold(2)}
-          likeAuction={onPress}
-          isOnline={true}
-        />
+        {listAuctionOther.map((auctionItem: Auction, key) => 
+          <LiveAuction
+            timeEnd={auctionItem?.sessionInformation?.timeEnd}
+            imageUrl={auctionItem?.product?.imageUrl}
+            avatarUrlCreator={auctionItem?.seller?.userInformation?.profileImage || ''}
+            nameCreator={auctionItem?.seller?.userInformation?.displayName || ''}
+            nameProduct={auctionItem?.product?.name || ''}
+            liked={checkLikedRecommendAuction(auctionItem)}
+            currentBid={auctionItem?.sessionInformation?.largestBid?.bidPrice || 0}
+            viewAuction={() => goToDetailSold(Number(auctionItem.id))}
+            likeAuction={onPress}
+            isOnline={true}
+            key={key}
+          />
+        )}
 
         <View style={styles.wrapHotBid}>
           <Image source={images.iconHotBid} style={styles.iconHotBid} />

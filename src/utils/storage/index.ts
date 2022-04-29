@@ -30,7 +30,7 @@ export const getUserData = async () => {
     if (value !== null) {
       return JSON.parse(value);
     }
-    return false;
+    return null;
   } catch (error) {
     return false;
   }

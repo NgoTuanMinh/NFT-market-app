@@ -15,4 +15,14 @@ export interface User {
   userName: string;
   isLogged: boolean;
   favouriteProduct: Artwork[];
+  userInformation: UserInformation;
+}
+
+export interface UserInformation {
+  rating?: number;
+  profileImage: string;
+  bio?: string;
+  displayName: string;
+  email: string;
+  phoneNumber: string;
 }
