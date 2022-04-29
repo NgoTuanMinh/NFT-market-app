@@ -60,7 +60,7 @@ const ModalListArtwork = ({
                   imageSelected={imageSelected}
                   setImageSelecte={setImageSelecte}
                 />
-              ))}
+              )}
             </View>
           </ScrollView>
           <View style={styles.button}>
