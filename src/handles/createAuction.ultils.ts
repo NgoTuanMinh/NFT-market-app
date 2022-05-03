@@ -4,7 +4,9 @@ import {
   artworkActions,
   selectListArtwork,
 } from '../store/reducers/artworkReducer';
+import { auctionActions } from '../store/reducers/auctionReducer';
 import { Artwork } from '../types/artwork';
+import { CreateAuctionInput } from '../types/auction';
 
 interface Utils {
   indexScreen: number;
@@ -29,7 +31,8 @@ export default function CreateAuctionUtils(): Utils {
   const [price, setPrice] = useState<string>('');
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const dateNow = new Date();
-  const [date, setDate] = useState(dateNow.setDate(dateNow.getDate() + 1));
+  const dateInitial = new Date(dateNow.setDate(dateNow.getDate() + 1));
+  const [date, setDate] = useState(dateInitial);
   const [showModalSelectImage, setShowModalSelectImage] =
     useState<boolean>(false);
   const [imageSelected, setImageSelecte] = useState<number | undefined>(
@@ -42,15 +45,22 @@ export default function CreateAuctionUtils(): Utils {
   const listArtworkOwner = useSelector(selectListArtwork);
 
   const createAuction = () => {
-    console.log(
-      'create auction bid price ==========',
-      Number(price.replace(',', '.')),
-    );
+    if (!imageSelected || !date || !price || isNaN(Number(price))) {
+      return;
+    }
+    const data: CreateAuctionInput = {
+      timeEnd: date,
+      productId: imageSelected,
+      reservePrice: Number(price),
+    };
+    dispatch(auctionActions.createAuction(data));
+    setPrice('');
+    setDate(dateInitial);
+    setImageSelecte(undefined);
   };
-
   useEffect(() => {
     dispatch(artworkActions.getListArtwork());
-  });
+  }, [dispatch]);
 
   useEffect(() => {
     const imageDetail = listArtworkOwner.find(

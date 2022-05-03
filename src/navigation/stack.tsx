@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ScreenName from '../utils/screenName';
 import colors from '../utils/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTabBar from '../components/common/bottomTabBar/BottomTabBar';
@@ -18,6 +17,7 @@ import UploadArtScreen from '../screens/upload/UploadArtScreen';
 import { useSelector } from 'react-redux';
 import { selectSessionLogin } from '../store/reducers/authReducer';
 import CreateAuctionScreen from '../screens/upload/CreateAuction';
+import screenName from '../utils/screenName';
 
 const Stack = createStackNavigator();
 const Home = createStackNavigator();
@@ -53,13 +53,13 @@ export const RootStack = () => {
       <Stack.Navigator>
         {accessToken ? (
           <Stack.Screen
-            name={ScreenName.BOTTOM_STACK}
+            name={screenName.BOTTOM_STACK}
             component={BottomStack}
             options={{ headerShown: false }}
           />
         ) : (
           <Stack.Screen
-            name={ScreenName.AUTH_STACK}
+            name={screenName.AUTH_STACK}
             component={AuthStack}
             options={{ headerShown: false }}
           />
@@ -75,12 +75,12 @@ const HomeStack = () => {
     <Home.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
       <Home.Screen
-        name={ScreenName.HOME_SCREEN}
+        name={screenName.HOME_SCREEN}
         component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Home.Screen
-        name={ScreenName.DETAIL_AUCTION_SCREEN}
+        name={screenName.DETAIL_AUCTION_SCREEN}
         component={DetailAuctionScreen}
         // options={{ headerShown: false }}
         options={({ route }: any) => ({
@@ -91,7 +91,7 @@ const HomeStack = () => {
           headerStyle: { backgroundColor: colors.grayBackground },
         })}
       />
-      {/* <Home.Screen name={ScreenName.HOME_SCREEN} component={HomeScreen} options={{header: ({ navigation }) => <Header title="Home" isBackButton={false} navigation={navigation} />}} /> */}
+      {/* <Home.Screen name={screenName.HOME_SCREEN} component={HomeScreen} options={{header: ({ navigation }) => <Header title="Home" isBackButton={false} navigation={navigation} />}} /> */}
     </Home.Navigator>
   );
 };
@@ -101,7 +101,7 @@ const ExploreStack = () => {
     <Explore.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
       <Explore.Screen
-        name={ScreenName.EXPLORE_SCREEN}
+        name={screenName.EXPLORE_SCREEN}
         component={ExploreScreen}
         options={{ headerShown: false }}
       />
@@ -114,7 +114,7 @@ const AuthStack = () => {
     <Auth.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
       <Auth.Screen
-        name={ScreenName.LOGIN_SCREEN}
+        name={screenName.LOGIN_SCREEN}
         component={LoginScreen}
         options={{ headerShown: false }}
       />
@@ -127,12 +127,12 @@ const UploadStack = () => {
     <Upload.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
       <Upload.Screen
-        name={ScreenName.CREATE_AUCTION_SCREEN}
-        component={CreateAuctionScreen}
-        options={{ headerShown: false }}
+      name={screenName.CREATE_AUCTION_SCREEN}
+      component={CreateAuctionScreen}
+      options={{ headerShown: false }}
       />
       <Upload.Screen
-        name={ScreenName.UPLOAD_SCREEN}
+        name={screenName.UPLOAD_SCREEN}
         component={UploadArtScreen}
         options={({ route }: any) => ({
           headerTitle: route?.params?.name,
@@ -151,7 +151,7 @@ const ProfileStack = () => {
     <Profile.Navigator
       screenOptions={{ cardStyle: { backgroundColor: colors.white } }}>
       <Profile.Screen
-        name={ScreenName.PROFILE_SCREEN}
+        name={screenName.PROFILE_SCREEN}
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
@@ -164,22 +164,22 @@ const BottomStack = () => {
     <>
       <BottomTab.Navigator tabBar={(props: any) => <BottomTabBar {...props} />}>
         <BottomTab.Screen
-          name={ScreenName.HOME_STACK}
+          name={screenName.HOME_STACK}
           component={HomeStack}
           options={{ headerShown: false }}
         />
         <BottomTab.Screen
-          name={ScreenName.EXPLORE_STACK}
+          name={screenName.EXPLORE_STACK}
           component={ExploreStack}
           options={{ headerShown: false }}
         />
         <BottomTab.Screen
-          name={ScreenName.UPLOAD_STACK}
+          name={screenName.UPLOAD_STACK}
           component={UploadStack}
           options={{ headerShown: false }}
         />
         <BottomTab.Screen
-          name={ScreenName.PROFILE_STACK}
+          name={screenName.PROFILE_STACK}
           component={ProfileStack}
           options={{ headerShown: false }}
         />

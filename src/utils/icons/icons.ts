@@ -5,6 +5,7 @@ const icons = {
   profileIcon: require('../../assets/icons/user-icon.png'),
   exploreIcon: require('../../assets/icons/global-network.png'),
   uploadIcon: require('../../assets/icons/Export.png'),
+  replaceIcon: require('../../assets/icons/replace.png'),
   imageIcon: require('../../assets/icons/Image.png'),
 };
 

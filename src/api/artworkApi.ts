@@ -20,9 +20,7 @@ const artworkApi = {
   listArtworkOwner(input: PaginationParams): Promise<Array<Artwork>> {
     const url = prefixUrl + '/list-product-owner';
     return axiosClient.get(url, {
-      data: {
-        data: input,
-      },
+      params: input,
     });
   },
 };

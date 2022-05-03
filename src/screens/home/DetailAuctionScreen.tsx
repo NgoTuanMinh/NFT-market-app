@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Linking, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 import Avatar from '../../components/common/avatar/Avatar';
@@ -12,6 +12,7 @@ import SoldDetail from '../../components/home/SoldDetail';
 import TagItem from '../../components/home/Tag';
 import Footer from '../../components/layout/Footer';
 import AuctionDetailUtils from '../../handles/auctionDetail.ultils';
+import { navigate } from '../../navigation/service';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
 import { fontWeights, sizes } from '../../utils/sizings';
@@ -39,7 +40,6 @@ function DetailAuctionScreen({ route, navigation }: any) {
   };
 
   const { auctionId } = route?.params;
-  console.log('auctionId', auctionId);
 
   const isSold = false;
   const isNoActivity = true;
@@ -52,9 +52,12 @@ function DetailAuctionScreen({ route, navigation }: any) {
     handleHideModalPlaceBid,
     handleShowModalPlaceBid,
     showModalPlaceBid,
+    getAuctionDetail,
   } = auctionUtils;
 
   const screenName = isSold ? 'Auction Sold' : 'Live Auction';
+
+  const auctionDetail = getAuctionDetail(auctionId);
 
   useEffect(() => {
     navigation.setOptions({
@@ -66,7 +69,7 @@ function DetailAuctionScreen({ route, navigation }: any) {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.wrapImage}>
         <Image
-          source={{ uri: 'https://wallpaperaccess.com/full/7280.jpg' }}
+          source={{ uri: auctionDetail?.product?.imageUrl }}
           style={styles.image}
         />
       </View>
@@ -100,17 +103,17 @@ function DetailAuctionScreen({ route, navigation }: any) {
         <LinkItem
           imageUrl={images.image1}
           title="View on Etherscan"
-          redirectTo={redirectTo}
+          redirectTo={() => Linking.openURL('https://etherscan.io/')}
         />
         <LinkItem
           imageUrl={images.iconStar}
           title="View on IPFS"
-          redirectTo={redirectTo}
+          redirectTo={() => Linking.openURL('https://ipfs.io/')}
         />
         <LinkItem
           imageUrl={images.chartPie}
           title="View IPFS Metadata"
-          redirectTo={redirectTo}
+          redirectTo={() => Linking.openURL('https://docs.ipfs.io/how-to/best-practices-for-nft-data/')}
         />
       </View>
 
