@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Modal, Portal } from 'react-native-paper';
 import CreateFixedAuction from '../../components/auction/CreateFixedAuction';
 import CreateNormalAuction from '../../components/auction/CreateNormalAuction';
 import ModalListArtwork from '../../components/auction/ModalListArtwork';

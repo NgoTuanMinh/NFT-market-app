@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Modal, Portal, Text } from 'react-native-paper';
+import { Modal, Portal } from 'react-native-paper';
 import { Artwork } from '../../types/artwork';
 import colors from '../../utils/colors';
 import icons from '../../utils/icons/icons';
@@ -53,7 +53,7 @@ const ModalListArtwork = ({
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
             <View style={styles.wrapModalSelect}>
-              {listArtworkOwner.map((item, idx) =>
+              {listArtworkOwner.map((item, idx) => (
                 <ImageItem
                   image={item}
                   key={idx}

@@ -21,6 +21,7 @@ interface Utils {
   setShowModalSelectImage: (val: boolean) => void;
   imageSelected: number | undefined;
   setImageSelecte: (val: number | undefined) => void;
+  imageDetailSelected: Artwork | undefined;
 }
 
 export default function CreateAuctionUtils(): Utils {
@@ -56,7 +57,7 @@ export default function CreateAuctionUtils(): Utils {
       (item: Artwork) => Number(item.id) === Number(imageSelected),
     );
     setImageDetailSelected(imageDetail);
-  }, [imageSelected]);
+  }, [imageSelected, listArtworkOwner]);
 
   return {
     indexScreen,
@@ -73,5 +74,6 @@ export default function CreateAuctionUtils(): Utils {
     setShowModalSelectImage,
     imageSelected,
     setImageSelecte,
+    imageDetailSelected,
   };
 }

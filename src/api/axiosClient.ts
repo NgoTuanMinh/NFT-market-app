@@ -8,8 +8,8 @@ import {
 } from '../utils/storage';
 
 const axiosClient = axios.create({
-  baseURL: 'http://10.0.2.2:3100/api/v1',
-  // baseURL: 'http://localhost:3100/api/v1',
+  // baseURL: 'http://10.0.2.2:3100/api/v1',
+  baseURL: 'http://localhost:3100/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -45,9 +45,11 @@ axiosClient.interceptors.response.use(
     const originalRequest = error.config;
     if ([401, 403].includes(error.response.status) && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = await getRefreshToken();
+      const refreshTokenGeted = await getRefreshToken();
       const [err, response] = await to(
-        axiosClient.post('/authentication/refresh-token', { refreshToken }),
+        axiosClient.post('/authentication/refresh-token', {
+          refreshToken: refreshTokenGeted,
+        }),
       );
       if (response && !err) {
         const { accessToken, refreshToken }: any = response;

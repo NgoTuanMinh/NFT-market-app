@@ -35,6 +35,7 @@ export const RootStack = () => {
 
   useEffect(() => {
     handleGetAccessToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectAccessToken]);
 
   const handleGetAccessToken = async () => {
@@ -133,7 +134,13 @@ const UploadStack = () => {
       <Upload.Screen
         name={ScreenName.UPLOAD_SCREEN}
         component={UploadArtScreen}
-        options={{ headerShown: false }}
+        options={({ route }: any) => ({
+          headerTitle: route?.params?.name,
+          headerBackTitle: '',
+          headerStatusBarHeight: 0,
+          headerBackTitleStyle: { display: 'none' },
+          headerStyle: { backgroundColor: colors.grayBackground },
+        })}
       />
     </Upload.Navigator>
   );
