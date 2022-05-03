@@ -13,17 +13,21 @@ import colors from '../../utils/colors';
 import images from '../../utils/images';
 import { fontWeights, sizes } from '../../utils/sizings';
 
-function HomeScreen({ navigation }: any) {
+function HomeScreen() {
   const onPress = () => {
     console.log('123');
   };
 
   const homeUtils = HomeUtils();
-  const { goToDetailSold, listAuction = [], checkLikedRecommendAuction } = homeUtils;
+  const {
+    goToDetailSold,
+    listAuction = [],
+    checkLikedRecommendAuction,
+  } = homeUtils;
 
   const recommendAuction = listAuction[0];
   const listAuctionOther = listAuction.slice(1);
-  
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -33,8 +37,12 @@ function HomeScreen({ navigation }: any) {
 
         <RecommendAuction
           imageUrl={recommendAuction?.product?.imageUrl}
-          avatarUrlCreator={recommendAuction?.seller?.userInformation?.profileImage || ''}
-          nameCreator={recommendAuction?.seller?.userInformation?.displayName || ''}
+          avatarUrlCreator={
+            recommendAuction?.seller?.userInformation?.profileImage || ''
+          }
+          nameCreator={
+            recommendAuction?.seller?.userInformation?.displayName || ''
+          }
           nameProduct={recommendAuction?.product?.name}
           liked={checkLikedRecommendAuction(recommendAuction)}
           reservePrice={recommendAuction?.sessionInformation?.reservePrice}
@@ -43,26 +51,34 @@ function HomeScreen({ navigation }: any) {
           likeAuction={onPress}
         />
 
-        <View style={styles.wrapLiveAuctionTitle}>
-          <View style={styles.liveStatus} />
-          <Text style={styles.liveAuctionTitle}>Live auctions</Text>
-        </View>
+        {listAuctionOther?.length > 0 && (
+          <View style={styles.wrapLiveAuctionTitle}>
+            <View style={styles.liveStatus} />
+            <Text style={styles.liveAuctionTitle}>Live auctions</Text>
+          </View>
+        )}
 
-        {listAuctionOther.map((auctionItem: Auction, key) => 
+        {listAuctionOther.map((auctionItem: Auction, key) => (
           <LiveAuction
             timeEnd={auctionItem?.sessionInformation?.timeEnd}
             imageUrl={auctionItem?.product?.imageUrl}
-            avatarUrlCreator={auctionItem?.seller?.userInformation?.profileImage || ''}
-            nameCreator={auctionItem?.seller?.userInformation?.displayName || ''}
+            avatarUrlCreator={
+              auctionItem?.seller?.userInformation?.profileImage || ''
+            }
+            nameCreator={
+              auctionItem?.seller?.userInformation?.displayName || ''
+            }
             nameProduct={auctionItem?.product?.name || ''}
             liked={checkLikedRecommendAuction(auctionItem)}
-            currentBid={auctionItem?.sessionInformation?.largestBid?.bidPrice || 0}
+            currentBid={
+              auctionItem?.sessionInformation?.largestBid?.bidPrice || 0
+            }
             viewAuction={() => goToDetailSold(Number(auctionItem.id))}
             likeAuction={onPress}
             isOnline={true}
             key={key}
           />
-        )}
+        ))}
 
         <View style={styles.wrapHotBid}>
           <Image source={images.iconHotBid} style={styles.iconHotBid} />
