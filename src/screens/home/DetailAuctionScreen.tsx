@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Image, Linking, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
+import { useQuery } from 'react-query';
+import userApi from '../../api/userrApi';
 import Avatar from '../../components/common/avatar/Avatar';
 import BidActivity from '../../components/home/BidActivity';
 import CurrentBid from '../../components/home/CurrentBid';
@@ -12,39 +14,18 @@ import SoldDetail from '../../components/home/SoldDetail';
 import TagItem from '../../components/home/Tag';
 import Footer from '../../components/layout/Footer';
 import AuctionDetailUtils from '../../handles/auctionDetail.ultils';
-import { navigate } from '../../navigation/service';
+import { Tag } from '../../types/artwork';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
 import { fontWeights, sizes } from '../../utils/sizings';
 
-// const LinkItem = ()
-
-const listTag = [
-  'color',
-  'circle',
-  'black',
-  'art',
-  'color',
-  'circle',
-  'black',
-  'art',
-];
-
 function DetailAuctionScreen({ route, navigation }: any) {
-  const redirectTo = () => {
-    console.log('123');
-  };
-
   const placeABid = () => {
     console.log('Place a bid');
   };
 
   const { auctionId } = route?.params;
-
-  const isSold = false;
-  const isNoActivity = true;
-  const isLiveAuction = !isSold && !isNoActivity;
-
+  
   const auctionUtils = AuctionDetailUtils();
   const {
     onChangePlaceBid,
@@ -55,15 +36,29 @@ function DetailAuctionScreen({ route, navigation }: any) {
     getAuctionDetail,
   } = auctionUtils;
 
+  const auctionDetail = getAuctionDetail(auctionId);
+
+  const isSold = (new Date(auctionDetail?.sessionInformation?.timeEnd).getTime()) < (new Date().getTime());
+  const isNoActivity = !auctionDetail?.sessionInformation?.largestBid;
+  const isLiveAuction = !isSold && !isNoActivity;
+
   const screenName = isSold ? 'Auction Sold' : 'Live Auction';
 
-  const auctionDetail = getAuctionDetail(auctionId);
+
+  const listTag = (auctionDetail?.product?.tags && auctionDetail?.product?.tags?.length > 0) 
+  ?
+  auctionDetail?.product?.tags?.map((tagItem: Tag) => tagItem?.type)
+  :
+  [];
+
+  const { isLoading, error, data: userInfo, isFetching } = useQuery('getUserInfoInput', () => userApi.getUserInfo());
 
   useEffect(() => {
     navigation.setOptions({
       headerTitle: screenName,
     });
   }, [screenName, navigation]);
+  if (!auctionDetail) return <></>;
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -75,22 +70,19 @@ function DetailAuctionScreen({ route, navigation }: any) {
       </View>
 
       <View style={styles.wrapNameProduct}>
-        <Text style={styles.nameProduct}>Silent Color</Text>
+        <Text style={styles.nameProduct}>{auctionDetail?.product?.name}</Text>
         <View style={styles.wrapIconHeart}>
           <Image source={images.heart} style={styles.iconHeart} />
         </View>
       </View>
 
       <View style={styles.wrapSeller}>
-        <Avatar urlAvatar={undefined} name={'openart'} height={30} />
-        <Text style={styles.sellerName}>@openart</Text>
+        <Avatar urlAvatar={undefined} name={auctionDetail?.seller?.userInformation?.displayName} height={30} />
+        <Text style={styles.sellerName}>@{auctionDetail?.seller?.userInformation?.displayName}</Text>
       </View>
 
       <Text style={styles.textDescriptionProduct}>
-        Together with my design team, we designed this futuristic Cyberyacht
-        concept artwork. We wanted to create something that has not been created
-        yet, so we started to collect ideas of how we imagine the Cyberyacht
-        could look like in the future.
+        {auctionDetail?.product?.description}
       </Text>
 
       <View style={styles.wrapListTag}>
@@ -121,12 +113,16 @@ function DetailAuctionScreen({ route, navigation }: any) {
         <SoldDetail
           soldByAvatar={'https://wallpaperaccess.com/full/391240.jpg'}
           soldByName={'david'}
-          soldPrice={1.5}
+          soldPrice={
+            Number((auctionDetail?.sessionInformation?.largestBid?.bidPrice)?.toFixed(2))
+            ||
+            Number((auctionDetail?.sessionInformation?.reservePrice).toFixed(2))
+          }
         />
       )}
 
       {isNoActivity && (
-        <ReservePrice reservePrice={1.5} placeABid={handleShowModalPlaceBid} />
+        <ReservePrice reservePrice={auctionDetail?.sessionInformation?.reservePrice} placeABid={handleShowModalPlaceBid} />
       )}
 
       {isLiveAuction && (
@@ -160,11 +156,11 @@ function DetailAuctionScreen({ route, navigation }: any) {
       <ModalPlaceBid
         visible={showModalPlaceBid}
         hideModal={handleHideModalPlaceBid}
-        minBid={0.09}
+        minBid={Number(auctionDetail?.sessionInformation?.largestBid?.bidPrice) || Number(auctionDetail?.sessionInformation?.reservePrice)}
         placeAbid={placeABid}
         bidPrice={priceBidPlaced}
         onChangeInput={onChangePlaceBid}
-        balence={1234}
+        balence={Number(userInfo?.balence?.amount)}
       />
 
       <Footer />
@@ -177,6 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.grayBackground,
     paddingTop: sizes.size_24,
+    paddingHorizontal: sizes.size_16,
   },
   wrapImage: {
     overflow: 'hidden',

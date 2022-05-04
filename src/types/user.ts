@@ -1,3 +1,3 @@
 export interface GetUserInfoInput {
-  relations: string[];
+  relations?: string[];
 }

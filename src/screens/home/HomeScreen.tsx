@@ -71,7 +71,7 @@ function HomeScreen() {
             nameProduct={auctionItem?.product?.name || ''}
             liked={checkLikedRecommendAuction(auctionItem)}
             currentBid={
-              auctionItem?.sessionInformation?.largestBid?.bidPrice || 0
+              auctionItem?.sessionInformation?.largestBid?.bidPrice || auctionItem?.sessionInformation?.reservePrice
             }
             viewAuction={() => goToDetailSold(Number(auctionItem.id))}
             likeAuction={onPress}

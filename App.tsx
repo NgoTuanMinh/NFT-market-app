@@ -13,12 +13,17 @@ import AppNavigator from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
 import { store } from './src/store';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <StoreProvider store={store}>
       <PaperProvider>
-        <AppNavigator />
+        <QueryClientProvider client={queryClient}>
+          <AppNavigator />
+        </QueryClientProvider>
       </PaperProvider>
     </StoreProvider>
   );

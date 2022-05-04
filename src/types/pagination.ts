@@ -11,4 +11,4 @@ export interface DataResponse<T> {
   data: T[];
 }
 
-export const initialPaginationParams = {page: 1, limit: 5};
+export const initialPaginationParams = {page: 1, limit: 10};
