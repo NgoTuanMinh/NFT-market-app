@@ -4,7 +4,7 @@ import axiosClient from './axiosClient';
 
 const prefixUrl = '/user';
 const userApi = {
-  async getUserInfo(input?: GetUserInfoInput): Promise<any> {
+  async getUserInfo(input?: GetUserInfoInput): Promise<User> {
     const url = prefixUrl + '/user-info';
     return await axiosClient.get(url, {
       params: input,

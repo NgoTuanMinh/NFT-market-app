@@ -46,7 +46,7 @@ function HomeScreen() {
           nameProduct={recommendAuction?.product?.name}
           liked={checkLikedRecommendAuction(recommendAuction)}
           reservePrice={recommendAuction?.sessionInformation?.reservePrice}
-          viewArtWork={onPress}
+          viewArtWork={() => goToDetailSold(Number(recommendAuction?.id))}
           placeABid={onPress}
           likeAuction={onPress}
         />
@@ -71,7 +71,8 @@ function HomeScreen() {
             nameProduct={auctionItem?.product?.name || ''}
             liked={checkLikedRecommendAuction(auctionItem)}
             currentBid={
-              auctionItem?.sessionInformation?.largestBid?.bidPrice || auctionItem?.sessionInformation?.reservePrice
+              auctionItem?.sessionInformation?.largestBid?.bidPrice ||
+              auctionItem?.sessionInformation?.reservePrice
             }
             viewAuction={() => goToDetailSold(Number(auctionItem.id))}
             likeAuction={onPress}

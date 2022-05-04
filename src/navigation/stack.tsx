@@ -140,6 +140,7 @@ const UploadStack = () => {
           headerStatusBarHeight: 0,
           headerBackTitleStyle: { display: 'none' },
           headerStyle: { backgroundColor: colors.grayBackground },
+          headerTitleStyle: { display: 'none' },
         })}
       />
     </Upload.Navigator>

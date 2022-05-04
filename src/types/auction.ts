@@ -1,10 +1,10 @@
-import { Artwork } from "./artwork";
-import { User } from "./authentication";
+import { Artwork } from './artwork';
+import { User } from './authentication';
 
 export interface Auction {
-  seller:User;
-  product:Artwork;
-  sessionInformation:SessionInformation;
+  seller: User;
+  product: Artwork;
+  sessionInformation: SessionInformation;
   isSold?: boolean;
   isFinished?: boolean;
   id?: number;
@@ -19,10 +19,11 @@ export interface SessionInformation {
 }
 
 export interface Bid {
-  bidBy?: number | User;
+  bidBy?: User;
   bidPrice: number;
-  auctionSession?: number | Auction;
+  auctionSession?: Auction;
   id?: number;
+  createdAt?: string;
 }
 
 export interface CreateAuctionInput {
@@ -39,4 +40,3 @@ export interface PlaceABidInput {
   auctionSessionId: number;
   bidPrice: number;
 }
-

@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { Image, Linking, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Text } from 'react-native-paper';
-import { useQuery } from 'react-query';
-import userApi from '../../api/userrApi';
+import { ActivityIndicator, Text } from 'react-native-paper';
 import Avatar from '../../components/common/avatar/Avatar';
 import BidActivity from '../../components/home/BidActivity';
 import CurrentBid from '../../components/home/CurrentBid';
@@ -14,51 +13,43 @@ import SoldDetail from '../../components/home/SoldDetail';
 import TagItem from '../../components/home/Tag';
 import Footer from '../../components/layout/Footer';
 import AuctionDetailUtils from '../../handles/auctionDetail.ultils';
-import { Tag } from '../../types/artwork';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
 import { fontWeights, sizes } from '../../utils/sizings';
 
 function DetailAuctionScreen({ route, navigation }: any) {
-  const placeABid = () => {
-    console.log('Place a bid');
-  };
-
   const { auctionId } = route?.params;
-  
-  const auctionUtils = AuctionDetailUtils();
+
+  const auctionUtils = AuctionDetailUtils(auctionId);
   const {
     onChangePlaceBid,
     priceBidPlaced,
     handleHideModalPlaceBid,
     handleShowModalPlaceBid,
     showModalPlaceBid,
-    getAuctionDetail,
+    screenName,
+    auctionDetail,
+    isLoading,
+    listTag,
+    isLiveAuction,
+    isNoActivity,
+    isSold,
+    placeABid,
+    userInfo,
+    listBidDisplay,
   } = auctionUtils;
-
-  const auctionDetail = getAuctionDetail(auctionId);
-
-  const isSold = (new Date(auctionDetail?.sessionInformation?.timeEnd).getTime()) < (new Date().getTime());
-  const isNoActivity = !auctionDetail?.sessionInformation?.largestBid;
-  const isLiveAuction = !isSold && !isNoActivity;
-
-  const screenName = isSold ? 'Auction Sold' : 'Live Auction';
-
-
-  const listTag = (auctionDetail?.product?.tags && auctionDetail?.product?.tags?.length > 0) 
-  ?
-  auctionDetail?.product?.tags?.map((tagItem: Tag) => tagItem?.type)
-  :
-  [];
-
-  const { isLoading, error, data: userInfo, isFetching } = useQuery('getUserInfoInput', () => userApi.getUserInfo());
 
   useEffect(() => {
     navigation.setOptions({
       headerTitle: screenName,
     });
   }, [screenName, navigation]);
-  if (!auctionDetail) return <></>;
+  if (!auctionDetail) {
+    return <></>;
+  }
+  if (isLoading) {
+    return <ActivityIndicator animating={true} />;
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -77,8 +68,14 @@ function DetailAuctionScreen({ route, navigation }: any) {
       </View>
 
       <View style={styles.wrapSeller}>
-        <Avatar urlAvatar={undefined} name={auctionDetail?.seller?.userInformation?.displayName} height={30} />
-        <Text style={styles.sellerName}>@{auctionDetail?.seller?.userInformation?.displayName}</Text>
+        <Avatar
+          urlAvatar={undefined}
+          name={auctionDetail?.seller?.userInformation?.displayName}
+          height={30}
+        />
+        <Text style={styles.sellerName}>
+          @{auctionDetail?.seller?.userInformation?.displayName}
+        </Text>
       </View>
 
       <Text style={styles.textDescriptionProduct}>
@@ -105,7 +102,11 @@ function DetailAuctionScreen({ route, navigation }: any) {
         <LinkItem
           imageUrl={images.chartPie}
           title="View IPFS Metadata"
-          redirectTo={() => Linking.openURL('https://docs.ipfs.io/how-to/best-practices-for-nft-data/')}
+          redirectTo={() =>
+            Linking.openURL(
+              'https://docs.ipfs.io/how-to/best-practices-for-nft-data/',
+            )
+          }
         />
       </View>
 
@@ -114,15 +115,21 @@ function DetailAuctionScreen({ route, navigation }: any) {
           soldByAvatar={'https://wallpaperaccess.com/full/391240.jpg'}
           soldByName={'david'}
           soldPrice={
-            Number((auctionDetail?.sessionInformation?.largestBid?.bidPrice)?.toFixed(2))
-            ||
+            Number(
+              auctionDetail?.sessionInformation?.largestBid?.bidPrice?.toFixed(
+                2,
+              ),
+            ) ||
             Number((auctionDetail?.sessionInformation?.reservePrice).toFixed(2))
           }
         />
       )}
 
       {isNoActivity && (
-        <ReservePrice reservePrice={auctionDetail?.sessionInformation?.reservePrice} placeABid={handleShowModalPlaceBid} />
+        <ReservePrice
+          reservePrice={auctionDetail?.sessionInformation?.reservePrice}
+          placeABid={handleShowModalPlaceBid}
+        />
       )}
 
       {isLiveAuction && (
@@ -135,7 +142,19 @@ function DetailAuctionScreen({ route, navigation }: any) {
 
       <Text style={styles.activityListText}>Activity</Text>
 
-      <BidActivity
+      {listBidDisplay.length > 0 &&
+        listBidDisplay.map((bidDisplay, idx) => (
+          <BidActivity
+            bidByAvatar={bidDisplay?.bidByAvatar}
+            bidByName={bidDisplay?.bidByName}
+            bidPrice={bidDisplay?.bidPrice}
+            bidTime={bidDisplay?.bidTime}
+            isWinner={bidDisplay?.isWinner}
+            key={`BidActivity-${idx}`}
+          />
+        ))}
+
+      {/* <BidActivity
         bidByAvatar={
           'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
         }
@@ -143,20 +162,23 @@ function DetailAuctionScreen({ route, navigation }: any) {
         bidPrice={1.5}
         bidTime={'2022-04-23T16:23:49.000Z'}
         isWinner={true}
-      />
-
+      /> */}
+      {/*
       <BidActivity
         bidByAvatar={undefined}
         bidByName={'David'}
         bidPrice={1.5}
         bidTime={'2022-04-23T16:23:49.000Z'}
         isWinner={false}
-      />
+      /> */}
 
       <ModalPlaceBid
         visible={showModalPlaceBid}
         hideModal={handleHideModalPlaceBid}
-        minBid={Number(auctionDetail?.sessionInformation?.largestBid?.bidPrice) || Number(auctionDetail?.sessionInformation?.reservePrice)}
+        minBid={
+          Number(auctionDetail?.sessionInformation?.largestBid?.bidPrice) ||
+          Number(auctionDetail?.sessionInformation?.reservePrice)
+        }
         placeAbid={placeABid}
         bidPrice={priceBidPlaced}
         onChangeInput={onChangePlaceBid}

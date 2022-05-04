@@ -16,6 +16,7 @@ export interface User {
   isLogged: boolean;
   favouriteProduct: Artwork[];
   userInformation: UserInformation;
+  balence?: any;
 }
 
 export interface UserInformation {
