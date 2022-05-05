@@ -40,3 +40,7 @@ export interface PlaceABidInput {
   auctionSessionId: number;
   bidPrice: number;
 }
+
+export interface GetAuctionDetailInput {
+  auctionId: number;
+}

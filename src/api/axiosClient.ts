@@ -8,8 +8,8 @@ import {
 } from '../utils/storage';
 
 const axiosClient = axios.create({
-  // baseURL: 'http://10.0.2.2:3100/api/v1',
-  baseURL: 'http://localhost:3100/api/v1',
+  baseURL: 'http://10.0.2.2:3100/api/v1',
+  // baseURL: 'http://localhost:3100/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,7 +29,7 @@ axiosClient.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
-    console.log('error==========', error?.response?.data);
+    console.log('error======11111111====', error?.response?.data);
     return Promise.reject(error);
   },
 );
@@ -61,7 +61,7 @@ axiosClient.interceptors.response.use(
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    console.log('error==========', error?.response?.data);
+    console.log('error====222222222======', error?.response?.data);
     return Promise.reject(error?.response?.data);
   },
 );

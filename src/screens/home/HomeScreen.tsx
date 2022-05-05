@@ -23,6 +23,7 @@ function HomeScreen() {
     goToDetailSold,
     listAuction = [],
     checkLikedRecommendAuction,
+    likeArtwork,
   } = homeUtils;
 
   const recommendAuction = listAuction[0];

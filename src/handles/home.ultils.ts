@@ -2,15 +2,19 @@
 // eslint-disable react-hooks/exhaustive-deps
 
 import { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import artworkApi from '../api/artworkApi';
+import auctionApi from '../api/auctionApi';
 import { navigate } from '../navigation/service';
 import {
   auctionActions,
   selectListAuction,
 } from '../store/reducers/auctionReducer';
+import { snackbarActions } from '../store/reducers/snackbarReducer';
 import { selectUser, userActions } from '../store/reducers/userReducer';
-import { Artwork } from '../types/artwork';
-import { Auction } from '../types/auction';
+import { Artwork, LikeArtworkInput } from '../types/artwork';
+import { Auction, PlaceABidInput, ViewAuctionInput } from '../types/auction';
 import { User } from '../types/authentication';
 import screenName from '../utils/screenName';
 import { getUserData } from '../utils/storage';
@@ -19,6 +23,7 @@ interface Utils {
   listAuction: Auction[];
   goToDetailSold: (id: number) => void;
   checkLikedRecommendAuction: (auction: Auction) => boolean;
+  likeArtwork: (input: LikeArtworkInput) => void;
 }
 
 export default function HomeUtils(): Utils {
@@ -37,7 +42,34 @@ export default function HomeUtils(): Utils {
     navigate(screenName.DETAIL_AUCTION_SCREEN, {
       auctionId: id,
     });
+    mutateViewAuction({
+      auctionSessionId: id,
+    })
   };
+
+  const {
+    isLoading: isLoadingViewAuction,
+    isSuccess: isSuccessViewAuction,
+    mutate: mutateViewAuction,
+  } = useMutation((input: ViewAuctionInput) => auctionApi.viewAuction(input), {
+    onError: (e: any) => {
+      dispatch(snackbarActions.showSnackbar(e?.message))
+    },
+  });
+
+  const {
+    isLoading: isLoadingLikeArtwork,
+    isSuccess: isSuccessLikeArtwork,
+    mutate: mutateLikeArtwork,
+  } = useMutation((input: LikeArtworkInput) => artworkApi.like(input), {
+    onError: (e: any) => {
+      dispatch(snackbarActions.showSnackbar(e?.message))
+    },
+  });
+
+  const likeArtwork = (input: LikeArtworkInput) => {
+    mutateLikeArtwork(input);
+  }
 
   useEffect(() => {
     handleGetUser();
@@ -70,5 +102,6 @@ export default function HomeUtils(): Utils {
     listAuction,
     goToDetailSold,
     checkLikedRecommendAuction,
+    likeArtwork,
   };
 }

@@ -21,7 +21,7 @@ const initialState: DialogState = {
 };
 
 const dialogSlice = createSlice({
-  name: 'authentication',
+  name: 'dialog',
   initialState: initialState,
   reducers: {
     showDialog(state, action: PayloadAction<PayloadState>) {

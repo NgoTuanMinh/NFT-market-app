@@ -44,9 +44,11 @@ function DetailAuctionScreen({ route, navigation }: any) {
       headerTitle: screenName,
     });
   }, [screenName, navigation]);
+
   if (!auctionDetail) {
     return <></>;
   }
+
   if (isLoading) {
     return <ActivityIndicator animating={true} />;
   }
@@ -134,13 +136,13 @@ function DetailAuctionScreen({ route, navigation }: any) {
 
       {isLiveAuction && (
         <CurrentBid
-          currentBid={1.5}
-          placeABid={placeABid}
-          timeEnd={'2022-04-23T16:23:49.000Z'}
+          currentBid={auctionDetail?.sessionInformation?.largestBid?.bidPrice || auctionDetail?.sessionInformation?.reservePrice}
+          placeABid={handleShowModalPlaceBid}
+          timeEnd={auctionDetail?.sessionInformation?.timeEnd}
         />
       )}
 
-      <Text style={styles.activityListText}>Activity</Text>
+      {listBidDisplay.length > 0 && <Text style={styles.activityListText}>Activity</Text>}
 
       {listBidDisplay.length > 0 &&
         listBidDisplay.map((bidDisplay, idx) => (

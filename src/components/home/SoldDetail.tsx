@@ -27,7 +27,7 @@ const SoldDetail = ({ soldByAvatar, soldByName, soldPrice }: IProps) => {
 
       <View style={styles.wrapName}>
         <Text style={styles.nameTitle}>Owner by</Text>
-        <Avatar urlAvatar={soldByAvatar} name={'david'} height={30} />
+        <Avatar urlAvatar={soldByAvatar} name={soldByName} height={30} />
         <Text style={styles.name}>@{soldByName}</Text>
       </View>
     </View>

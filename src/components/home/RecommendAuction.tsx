@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import colors from '../../utils/colors';
 import images from '../../utils/images';
@@ -28,7 +28,7 @@ const RecommendAuction = ({
   liked = false,
   reservePrice,
   placeABid,
-  // likeAuction,
+  likeAuction,
   viewArtWork,
   isOnline = false,
 }: IProps) => {
@@ -53,12 +53,14 @@ const RecommendAuction = ({
               <Text style={styles.textNameCreator}>{nameCreator}</Text>
               <Text style={styles.textCreatorDescription}>Creator</Text>
             </View>
-            <View style={styles.wrapHeart}>
-              <Image
-                source={liked ? images.heartActive : images.heart}
-                style={styles.heart}
-              />
-            </View>
+            <TouchableOpacity onPress={likeAuction}>
+              <View style={styles.wrapHeart}>
+                <Image
+                  source={liked ? images.heartActive : images.heart}
+                  style={styles.heart}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -71,7 +73,7 @@ const RecommendAuction = ({
       <ButtonCommon title="Place a bid" onPress={placeABid} />
       <View style={{ marginBottom: sizes.size_12 }} />
       <ButtonCommon
-        title="View art work"
+        title="View auction"
         onPress={viewArtWork}
         primary={false}
       />

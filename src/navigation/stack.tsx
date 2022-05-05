@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import colors from '../utils/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { Snackbar } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import BottomTabBar from '../components/common/bottomTabBar/BottomTabBar';
+import DialogCommon from '../components/common/dialog/Dialog';
+import Header from '../components/layout/Header';
 import {
   DetailAuctionScreen,
   ExploreScreen,
   HomeScreen,
-  ProfileScreen,
+  ProfileScreen
 } from '../screens';
-import DialogCommon from '../components/common/dialog/Dialog';
-import Header from '../components/layout/Header';
 import LoginScreen from '../screens/home/LoginSceen';
-import { getAccessToken } from '../utils/storage';
-import UploadArtScreen from '../screens/upload/UploadArtScreen';
-import { useSelector } from 'react-redux';
-import { selectSessionLogin } from '../store/reducers/authReducer';
 import CreateAuctionScreen from '../screens/upload/CreateAuction';
+import UploadArtScreen from '../screens/upload/UploadArtScreen';
+import { selectSessionLogin } from '../store/reducers/authReducer';
+import { selectVisibleSnackbar, snackbarActions } from '../store/reducers/snackbarReducer';
+import colors from '../utils/colors';
 import screenName from '../utils/screenName';
+import { getAccessToken } from '../utils/storage';
 
 const Stack = createStackNavigator();
 const Home = createStackNavigator();
@@ -33,6 +35,10 @@ export const RootStack = () => {
   const selectSession = useSelector(selectSessionLogin);
   const { accessToken: selectAccessToken } = selectSession;
 
+  const selectContentSnackbar = useSelector(selectVisibleSnackbar);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     handleGetAccessToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,6 +52,10 @@ export const RootStack = () => {
       setAccessToken(accessTokenGeted);
     }
   };
+
+  const onDismissSnackBar = () => {
+    dispatch(snackbarActions.hideSnackbar());
+  }
 
   return (
     <>
@@ -66,6 +76,15 @@ export const RootStack = () => {
         )}
       </Stack.Navigator>
       <DialogCommon />
+      <Snackbar
+        visible={Boolean(selectContentSnackbar)}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'x',
+          onPress: onDismissSnackBar,
+        }}>
+        {selectContentSnackbar}
+      </Snackbar>
     </>
   );
 };

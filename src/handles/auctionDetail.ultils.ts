@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import auctionApi from '../api/auctionApi';
 import userApi from '../api/userrApi';
-import { selectListAuction } from '../store/reducers/auctionReducer';
+import { auctionActions, selectListAuction } from '../store/reducers/auctionReducer';
+import { snackbarActions } from '../store/reducers/snackbarReducer';
 import { Tag } from '../types/artwork';
-import { Auction, Bid } from '../types/auction';
+import { Auction, Bid, PlaceABidInput } from '../types/auction';
 import { formatDate } from '../utils/formats/formatCommon';
 
 interface BidDisplay {
@@ -21,7 +22,6 @@ interface Utils {
   handleHideModalPlaceBid: () => void;
   handleShowModalPlaceBid: () => void;
   showModalPlaceBid: boolean;
-  getAuctionDetail: (auctionId: number) => Auction;
   placeABid: () => void;
   userInfo: any;
   isLoading: boolean;
@@ -30,13 +30,15 @@ interface Utils {
   isLiveAuction: boolean;
   screenName: string;
   listTag: string[];
-  auctionDetail: Auction;
+  auctionDetail: Auction | undefined;
   listBidDisplay: BidDisplay[];
 }
 
 export default function AuctionDetailUtils(auctionId: number): Utils {
   const [priceBidPlaced, setPriceBidPlace] = useState<string>('');
   const [showModalPlaceBid, setShowModalPlaceBid] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const {
     isLoading: isLoadingGetUserInfo,
@@ -51,9 +53,20 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     refetch: getListBid,
   } = useQuery('getListBid', () =>
     auctionApi.listBid({
-      auctionSessionId: auctionDetail?.sessionInformation?.id,
+      auctionSessionId: auctionId,
       page: 1,
       limit: 10,
+    }),
+  );
+
+  const {
+    isLoading: isLoadingGetAuction,
+    data: auctionDetail,
+    isFetching: isFetchingGetAuction,
+    refetch: getAuction,
+  } = useQuery('getAuction', () =>
+    auctionApi.getAuction({
+      auctionId,
     }),
   );
 
@@ -65,7 +78,7 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
       ? formatDate(bidItem?.createdAt, 'hh:mmA DD:MM:YYYY')
       : '',
     isWinner:
-      isSold && Number(bidItem?.id) === Number(auctionDetail?.largestBid?.id),
+      isSold && Number(bidItem?.id) === Number(auctionDetail?.sessionInformation?.largestBid?.id || ''),
   }));
 
   const {
@@ -73,20 +86,17 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isSuccess: isSuccessPlaceABid,
     mutate: mutatePlaceABid,
-  } = useMutation((input: any) => auctionApi.placeABid(input), {
-    onSuccess: async () => await getListBid(),
+  } = useMutation((input: PlaceABidInput) => auctionApi.placeABid(input), {
+    onSuccess: async () =>{
+      await getAuction();
+    },
+    onError: (e: any) => {
+      dispatch(snackbarActions.showSnackbar(e?.message))
+    },
   });
-  const listAuction = useSelector(selectListAuction);
-
-  const getAuctionDetail = (id: number) =>
-    listAuction.find(
-      (auctionItem: Auction) => Number(auctionItem?.id) === Number(id),
-    );
-
-  const auctionDetail = getAuctionDetail(auctionId);
 
   const isSold =
-    new Date(auctionDetail?.sessionInformation?.timeEnd).getTime() <
+    new Date(auctionDetail?.sessionInformation?.timeEnd || '').getTime() <
     new Date().getTime();
   const isNoActivity = !auctionDetail?.sessionInformation?.largestBid;
   const isLiveAuction = !isSold && !isNoActivity;
@@ -103,12 +113,20 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     isFetchingGetUserInfo ||
     isLoadingPlaceABid ||
     isLoadingGetListBid ||
-    isFetchingGetListBid;
+    isFetchingGetListBid ||
+    isFetchingGetAuction || 
+    isLoadingGetAuction
+    ;
 
   const placeABid = () => {
+    if (Number(priceBidPlaced) <= Number(auctionDetail?.sessionInformation?.largestBid?.bidPrice)) {
+      setShowModalPlaceBid(false);
+      dispatch(snackbarActions.showSnackbar('Your price must larger the largest bid. Try again.'));
+      return;
+    }
     mutatePlaceABid({
       auctionSessionId: auctionId,
-      bidPrice: priceBidPlaced,
+      bidPrice: Number(priceBidPlaced),
     });
     setShowModalPlaceBid(false);
     setPriceBidPlace('');
@@ -132,7 +150,6 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     handleHideModalPlaceBid,
     handleShowModalPlaceBid,
     showModalPlaceBid,
-    getAuctionDetail,
     placeABid,
     isLoading,
     userInfo,

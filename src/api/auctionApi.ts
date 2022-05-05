@@ -2,6 +2,7 @@ import {
   Auction,
   Bid,
   CreateAuctionInput,
+  GetAuctionDetailInput,
   PlaceABidInput,
   ViewAuctionInput,
 } from '../types/auction';
@@ -15,7 +16,7 @@ const auctionApi = {
     return await axiosClient.post(url, input);
   },
   async viewAuction(input: ViewAuctionInput): Promise<Auction> {
-    const url = prefixUrl + '/view-auction';
+    const url = prefixUrl + '/view-auction';    
     return await axiosClient.post(url, input);
   },
   async placeABid(input: PlaceABidInput): Promise<Bid> {
@@ -30,6 +31,12 @@ const auctionApi = {
   },
   async listBid(input: PaginationParams | ViewAuctionInput): Promise<any> {
     const url = prefixUrl + '/list-bid';
+    return await axiosClient.get(url, {
+      params: input,
+    });
+  },
+  async getAuction(input: GetAuctionDetailInput): Promise<Auction> {
+    const url = prefixUrl + '/auction';
     return await axiosClient.get(url, {
       params: input,
     });
