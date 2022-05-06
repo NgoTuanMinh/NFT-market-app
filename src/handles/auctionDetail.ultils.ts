@@ -75,7 +75,7 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     bidByName: bidItem?.bidBy?.userInformation?.displayName,
     bidPrice: bidItem?.bidPrice,
     bidTime: bidItem?.createdAt
-      ? formatDate(bidItem?.createdAt, 'hh:mmA DD:MM:YYYY')
+      ? formatDate(bidItem?.createdAt, 'DD/MM/YYYY hh:mmA')
       : '',
     isWinner:
       isSold && Number(bidItem?.id) === Number(auctionDetail?.sessionInformation?.largestBid?.id || ''),

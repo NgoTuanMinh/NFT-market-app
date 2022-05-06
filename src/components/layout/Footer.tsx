@@ -4,6 +4,8 @@ import images from '../../utils/images';
 import { sizes } from '../../utils/sizings';
 import colors from '../../utils/colors';
 import ButtonCommon from '../common/buttons/commonButton/CommonButton';
+import { navigate } from '../../navigation/service';
+import screenName from '../../utils/screenName';
 
 export default function Footer() {
   const onPress = () => {
@@ -16,10 +18,10 @@ export default function Footer() {
 
       <Image source={images.logoDescription} style={styles.logoDescription} />
 
-      <ButtonCommon title="Earn now" primary={true} onPress={onPress} />
+      <ButtonCommon title="Connect your wallet" primary={true} onPress={() => navigate(screenName.CONNECT_WALLET_SCREEN)} />
       <View style={{ marginBottom: sizes.size_12 }} />
 
-      <ButtonCommon title="Earn now" primary={false} onPress={onPress} />
+      <ButtonCommon title="Discover more" primary={false} onPress={onPress} />
       <View style={{ marginBottom: sizes.size_12 }} />
     </View>
   );

@@ -4,8 +4,8 @@ import { TextInput } from 'react-native-paper';
 import { sizes } from '../../../utils/sizings';
 
 interface InputTextProps {
-  onChange: (value: string, name?: string) => void;
-  value: string;
+  onChange: (value: string | any, name?: string) => void;
+  value: string | any;
   label: string;
   name?: string;
   type?: string;

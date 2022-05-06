@@ -156,24 +156,6 @@ function DetailAuctionScreen({ route, navigation }: any) {
           />
         ))}
 
-      {/* <BidActivity
-        bidByAvatar={
-          'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-        }
-        bidByName={'David'}
-        bidPrice={1.5}
-        bidTime={'2022-04-23T16:23:49.000Z'}
-        isWinner={true}
-      /> */}
-      {/*
-      <BidActivity
-        bidByAvatar={undefined}
-        bidByName={'David'}
-        bidPrice={1.5}
-        bidTime={'2022-04-23T16:23:49.000Z'}
-        isWinner={false}
-      /> */}
-
       <ModalPlaceBid
         visible={showModalPlaceBid}
         hideModal={handleHideModalPlaceBid}

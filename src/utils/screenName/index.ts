@@ -12,6 +12,7 @@ const screenName = {
   EXPLORE_STACK: 'EXPLORE_STACK',
   AUTH_STACK: 'AUTH_STACK',
   UPLOAD_STACK: 'UPLOAD_STACK',
+  CONNECT_WALLET_SCREEN: 'CONNECT_WALLET_SCREEN',
 };
 
 export default screenName;

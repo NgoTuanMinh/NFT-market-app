@@ -7,6 +7,7 @@ const icons = {
   uploadIcon: require('../../assets/icons/Export.png'),
   replaceIcon: require('../../assets/icons/replace.png'),
   imageIcon: require('../../assets/icons/Image.png'),
+  nextIcon: require('../../assets/icons/next.png'),
 };
 
 export default icons;

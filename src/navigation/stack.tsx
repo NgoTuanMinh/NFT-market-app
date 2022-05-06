@@ -12,6 +12,7 @@ import {
   HomeScreen,
   ProfileScreen
 } from '../screens';
+import ConnectWalletScreen from '../screens/home/ConnectWalletScreen';
 import LoginScreen from '../screens/home/LoginSceen';
 import CreateAuctionScreen from '../screens/upload/CreateAuction';
 import UploadArtScreen from '../screens/upload/UploadArtScreen';
@@ -104,6 +105,17 @@ const HomeStack = () => {
         // options={{ headerShown: false }}
         options={({ route }: any) => ({
           headerTitle: route?.params?.name,
+          headerBackTitle: '',
+          headerStatusBarHeight: 0,
+          headerBackTitleStyle: { display: 'none' },
+          headerStyle: { backgroundColor: colors.grayBackground },
+        })}
+      />
+      <Home.Screen
+        name={screenName.CONNECT_WALLET_SCREEN}
+        component={ConnectWalletScreen}
+        options={() => ({
+          headerTitle: '',
           headerBackTitle: '',
           headerStatusBarHeight: 0,
           headerBackTitleStyle: { display: 'none' },

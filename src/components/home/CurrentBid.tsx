@@ -25,7 +25,7 @@ const CurrentBid = ({ currentBid, placeABid, timeEnd }: IProps) => {
         </Text>
       </View>
 
-      {days > 0 && hours > 0 && minutes >= 0 && seconds >= 0 && <Text style={styles.endTimeTitle}>Auction ending in</Text>}
+      {days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0 && <Text style={styles.endTimeTitle}>Auction ending in</Text>}
 
       <View style={styles.wrapTime}>
         {days > 0 && hours > 0 && minutes >= 0 && seconds >= 0 &&(

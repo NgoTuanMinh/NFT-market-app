@@ -36,7 +36,7 @@ function HomeScreen() {
         showsVerticalScrollIndicator={false}>
         <Banner />
 
-        <RecommendAuction
+        {recommendAuction && <RecommendAuction
           imageUrl={recommendAuction?.product?.imageUrl}
           avatarUrlCreator={
             recommendAuction?.seller?.userInformation?.profileImage || ''
@@ -50,7 +50,7 @@ function HomeScreen() {
           viewArtWork={() => goToDetailSold(Number(recommendAuction?.id))}
           placeABid={onPress}
           likeAuction={onPress}
-        />
+        />}
 
         {listAuctionOther?.length > 0 && (
           <View style={styles.wrapLiveAuctionTitle}>
