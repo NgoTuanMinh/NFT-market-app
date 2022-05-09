@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Text } from 'react-native-paper';
+import { ActivityIndicator, Text } from 'react-native-paper';
 import HotBid from '../../components/home/HotBid';
 import LiveAuction from '../../components/home/LiveAuction';
 import RecommendAuction from '../../components/home/RecommendAuction';
@@ -23,11 +23,16 @@ function HomeScreen() {
     goToDetailSold,
     listAuction = [],
     checkLikedRecommendAuction,
-    likeArtwork,
+    isLoading,
+    isShowConnectWallet,
   } = homeUtils;
 
   const recommendAuction = listAuction[0];
   const listAuctionOther = listAuction.slice(1);
+
+  if (isLoading) {
+    return <ActivityIndicator animating={true} />;
+  }
 
   return (
     <View style={styles.container}>
@@ -36,21 +41,23 @@ function HomeScreen() {
         showsVerticalScrollIndicator={false}>
         <Banner />
 
-        {recommendAuction && <RecommendAuction
-          imageUrl={recommendAuction?.product?.imageUrl}
-          avatarUrlCreator={
-            recommendAuction?.seller?.userInformation?.profileImage || ''
-          }
-          nameCreator={
-            recommendAuction?.seller?.userInformation?.displayName || ''
-          }
-          nameProduct={recommendAuction?.product?.name}
-          liked={checkLikedRecommendAuction(recommendAuction)}
-          reservePrice={recommendAuction?.sessionInformation?.reservePrice}
-          viewArtWork={() => goToDetailSold(Number(recommendAuction?.id))}
-          placeABid={onPress}
-          likeAuction={onPress}
-        />}
+        {recommendAuction && (
+          <RecommendAuction
+            imageUrl={recommendAuction?.product?.imageUrl}
+            avatarUrlCreator={
+              recommendAuction?.seller?.userInformation?.profileImage || ''
+            }
+            nameCreator={
+              recommendAuction?.seller?.userInformation?.displayName || ''
+            }
+            nameProduct={recommendAuction?.product?.name}
+            liked={checkLikedRecommendAuction(recommendAuction)}
+            reservePrice={recommendAuction?.sessionInformation?.reservePrice}
+            viewArtWork={() => goToDetailSold(Number(recommendAuction?.id))}
+            placeABid={onPress}
+            likeAuction={onPress}
+          />
+        )}
 
         {listAuctionOther?.length > 0 && (
           <View style={styles.wrapLiveAuctionTitle}>
@@ -127,7 +134,7 @@ function HomeScreen() {
             reservePrice={2.3}
           />
         </ScrollView>
-        <Footer />
+        <Footer showConnectWallet={isShowConnectWallet} />
       </ScrollView>
     </View>
   );

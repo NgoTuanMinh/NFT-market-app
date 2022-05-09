@@ -8,8 +8,9 @@ import StepIndicator from 'react-native-step-indicator';
 import ConnectWalletUtils from '../../handles/connectWallet.utils';
 import InputText from '../../components/common/inputText/InputText';
 import icons from '../../utils/icons/icons';
+import { ActivityIndicator } from 'react-native-paper';
 
-const labels = ["Select", "Scan", "Confirm"];
+const labels = ['Select', 'Scan', 'Confirm'];
 const customStyles = {
   stepIndicatorSize: 40,
   currentStepIndicatorSize: 35,
@@ -44,36 +45,41 @@ function ConnectWalletScreen() {
     amount,
     setAmount,
     submitBalence,
+    isLoading,
   } = connectWalletUtils;
+
+  if (isLoading) {
+    return <ActivityIndicator animating={true} />;
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.title}>Add wallet to pay</Text>
       <Text style={styles.subTitle}>Easy to pay Digital Art with 3 step</Text>
       <StepIndicator
-         customStyles={customStyles}
-         currentPosition={indexPage}
-         labels={labels}
-         stepCount={3}
+        customStyles={customStyles}
+        currentPosition={indexPage}
+        labels={labels}
+        stepCount={3}
       />
-      
+
       <View style={styles.marginBottom8} />
       <View style={styles.marginBottom8} />
       <View style={styles.marginBottom8} />
 
-      {indexPage === 0 && <InputText
-        value={cardNumber}
-        onChange={onChangeCardNumber}
-        label='Card number'
-      />}
+      {indexPage === 0 && (
+        <InputText
+          value={cardNumber}
+          onChange={onChangeCardNumber}
+          label="Card number"
+        />
+      )}
 
-      {indexPage === 1 && <InputText
-        value={amount}
-        onChange={setAmount}
-        label='Amount'
-      />}
+      {indexPage === 1 && (
+        <InputText value={amount} onChange={setAmount} label="Amount" />
+      )}
 
-      {indexPage === 2 && 
+      {indexPage === 2 && (
         <View>
           <View style={styles.wrapTextConfirm}>
             <Text style={styles.confirmTitle}>Your card number: </Text>
@@ -84,36 +90,49 @@ function ConnectWalletScreen() {
             <Text style={styles.confirmText}>{amount}</Text>
           </View>
         </View>
-      }
+      )}
 
       <View style={styles.marginBottom8} />
       <View style={styles.marginBottom8} />
       <View style={styles.marginBottom8} />
       <View style={styles.marginBottom8} />
-      
+
       <View style={styles.wrapNavigate}>
-        <TouchableOpacity onPress={indexPage === 0 ? undefined : () => setIndexPage(indexPage-1)}>
-          <View style={[styles.wrapNavigateItem, indexPage === 0 && styles.hideButton]}>
-            <Image source={icons.nextIcon} style={[styles.iconArrow, styles.iconBack]} />
+        <TouchableOpacity
+          onPress={
+            indexPage === 0 ? undefined : () => setIndexPage(indexPage - 1)
+          }>
+          <View
+            style={[
+              styles.wrapNavigateItem,
+              indexPage === 0 && styles.hideButton,
+            ]}>
+            <Image
+              source={icons.nextIcon}
+              style={[styles.iconArrow, styles.iconBack]}
+            />
             <Text style={styles.navigateText}>Back</Text>
           </View>
         </TouchableOpacity>
 
-        {indexPage < 2 && <TouchableOpacity onPress={() => setIndexPage(indexPage + 1)}>
-          <View style={styles.wrapNavigateItem}>
-            <Text style={styles.navigateText}>Next</Text>
-            <Image source={icons.nextIcon} style={[styles.iconArrow]} />
-          </View>
-        </TouchableOpacity>}
+        {indexPage < 2 && (
+          <TouchableOpacity onPress={() => setIndexPage(indexPage + 1)}>
+            <View style={styles.wrapNavigateItem}>
+              <Text style={styles.navigateText}>Next</Text>
+              <Image source={icons.nextIcon} style={[styles.iconArrow]} />
+            </View>
+          </TouchableOpacity>
+        )}
 
-        {indexPage === 2 &&  <TouchableOpacity onPress={submitBalence}>
-          <View style={styles.wrapNavigateItem}>
-            <Text style={styles.navigateText}>Save</Text>
-            <Image source={icons.nextIcon} style={[styles.iconArrow]} />
-          </View>
-        </TouchableOpacity>}
+        {indexPage === 2 && (
+          <TouchableOpacity onPress={submitBalence}>
+            <View style={styles.wrapNavigateItem}>
+              <Text style={styles.navigateText}>Save</Text>
+              <Image source={icons.nextIcon} style={[styles.iconArrow]} />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
-
     </ScrollView>
   );
 }
@@ -162,7 +181,7 @@ const styles = StyleSheet.create({
     tintColor: colors.accentColor,
   },
   iconBack: {
-    transform: [{ rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
   },
   hideButton: {
     opacity: 0,
@@ -181,7 +200,7 @@ const styles = StyleSheet.create({
     fontWeight: fontWeights.fontWeight_700,
     lineHeight: sizes.size_24,
     color: colors.grayBody,
-  }
+  },
 });
 
 export default ConnectWalletScreen;

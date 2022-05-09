@@ -25,10 +25,12 @@ const CurrentBid = ({ currentBid, placeABid, timeEnd }: IProps) => {
         </Text>
       </View>
 
-      {days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0 && <Text style={styles.endTimeTitle}>Auction ending in</Text>}
+      {days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0 && (
+        <Text style={styles.endTimeTitle}>Auction ending in</Text>
+      )}
 
       <View style={styles.wrapTime}>
-        {days > 0 && hours > 0 && minutes >= 0 && seconds >= 0 &&(
+        {days > 0 && hours > 0 && minutes >= 0 && seconds >= 0 && (
           <View style={styles.wrapTimeItem}>
             <Text style={styles.time}>{hours < 10 ? `0${hours}` : hours}</Text>
             <Text style={styles.timeDetail}>hours</Text>
@@ -40,7 +42,7 @@ const CurrentBid = ({ currentBid, placeABid, timeEnd }: IProps) => {
             <Text style={styles.timeDetail}>hours</Text>
           </View>
         )}
-        {(minutes >= 0) && (
+        {minutes >= 0 && (
           <View style={styles.wrapTimeItem}>
             <Text style={styles.time}>
               {minutes < 10 ? `0${minutes}` : minutes}
@@ -48,7 +50,7 @@ const CurrentBid = ({ currentBid, placeABid, timeEnd }: IProps) => {
             <Text style={styles.timeDetail}>minutes</Text>
           </View>
         )}
-        {(seconds >= 0) && (
+        {seconds >= 0 && (
           <View style={styles.wrapTimeItem}>
             <Text style={styles.time}>
               {seconds < 10 ? `0${seconds}` : seconds}

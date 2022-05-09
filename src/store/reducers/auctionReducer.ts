@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Auction, CreateAuctionInput } from '../../types/auction';
 
-
 export interface AuctionState {
   loading: boolean;
   listAuction: Auction[];

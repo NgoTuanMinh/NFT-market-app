@@ -1,13 +1,17 @@
-import { Image, StyleSheet, View } from 'react-native';
 import React from 'react';
-import images from '../../utils/images';
-import { sizes } from '../../utils/sizings';
-import colors from '../../utils/colors';
-import ButtonCommon from '../common/buttons/commonButton/CommonButton';
+import { Image, StyleSheet, View } from 'react-native';
 import { navigate } from '../../navigation/service';
+import colors from '../../utils/colors';
+import images from '../../utils/images';
 import screenName from '../../utils/screenName';
+import { sizes } from '../../utils/sizings';
+import ButtonCommon from '../common/buttons/commonButton/CommonButton';
 
-export default function Footer() {
+interface FooterProps {
+  showConnectWallet?: boolean;
+}
+
+export default function Footer({ showConnectWallet = true }: FooterProps) {
   const onPress = () => {
     console.log('onPress');
   };
@@ -18,7 +22,13 @@ export default function Footer() {
 
       <Image source={images.logoDescription} style={styles.logoDescription} />
 
-      <ButtonCommon title="Connect your wallet" primary={true} onPress={() => navigate(screenName.CONNECT_WALLET_SCREEN)} />
+      {showConnectWallet && (
+        <ButtonCommon
+          title="Connect your wallet"
+          primary={true}
+          onPress={() => navigate(screenName.CONNECT_WALLET_SCREEN)}
+        />
+      )}
       <View style={{ marginBottom: sizes.size_12 }} />
 
       <ButtonCommon title="Discover more" primary={false} onPress={onPress} />

@@ -7,11 +7,8 @@ import { DataResponse, initialPaginationParams } from '../../types/pagination';
 import { auctionActions } from '../reducers/auctionReducer';
 
 function* handleCreateAuction(action: PayloadAction<CreateAuctionInput>) {
-  try {    
-    yield call(
-      auctionApi.create,
-      action.payload,
-    );
+  try {
+    yield call(auctionApi.create, action.payload);
     yield put(auctionActions.createAuctionSuccess());
     yield put(auctionActions.getListAuction());
     goback();
@@ -24,7 +21,7 @@ function* getListAuction() {
   try {
     const data: DataResponse<Auction> = yield call(
       auctionApi.listAuction,
-      initialPaginationParams
+      initialPaginationParams,
     );
     yield put(auctionActions.getListAuctionSuccess(data?.data));
   } catch (error: any) {

@@ -37,6 +37,7 @@ function DetailAuctionScreen({ route, navigation }: any) {
     placeABid,
     userInfo,
     listBidDisplay,
+    isShowConnectWallet,
   } = auctionUtils;
 
   useEffect(() => {
@@ -136,13 +137,18 @@ function DetailAuctionScreen({ route, navigation }: any) {
 
       {isLiveAuction && (
         <CurrentBid
-          currentBid={auctionDetail?.sessionInformation?.largestBid?.bidPrice || auctionDetail?.sessionInformation?.reservePrice}
+          currentBid={
+            auctionDetail?.sessionInformation?.largestBid?.bidPrice ||
+            auctionDetail?.sessionInformation?.reservePrice
+          }
           placeABid={handleShowModalPlaceBid}
           timeEnd={auctionDetail?.sessionInformation?.timeEnd}
         />
       )}
 
-      {listBidDisplay.length > 0 && <Text style={styles.activityListText}>Activity</Text>}
+      {listBidDisplay.length > 0 && (
+        <Text style={styles.activityListText}>Activity</Text>
+      )}
 
       {listBidDisplay.length > 0 &&
         listBidDisplay.map((bidDisplay, idx) => (
@@ -169,7 +175,7 @@ function DetailAuctionScreen({ route, navigation }: any) {
         balence={Number(userInfo?.balence?.amount)}
       />
 
-      <Footer />
+      <Footer showConnectWallet={isShowConnectWallet} />
     </ScrollView>
   );
 }

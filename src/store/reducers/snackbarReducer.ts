@@ -25,7 +25,8 @@ const snackbarSlice = createSlice({
 export const snackbarActions = snackbarSlice.actions;
 
 // Selector
-export const selectVisibleSnackbar = (state: RootState) => state?.snackbar?.content;
+export const selectVisibleSnackbar = (state: RootState) =>
+  state?.snackbar?.content;
 
 // Reducers
 const snackbarReducer = snackbarSlice.reducer;

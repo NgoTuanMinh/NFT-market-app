@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import auctionApi from '../api/auctionApi';
 import userApi from '../api/userrApi';
-import { auctionActions, selectListAuction } from '../store/reducers/auctionReducer';
+import { auctionActions } from '../store/reducers/auctionReducer';
 import { snackbarActions } from '../store/reducers/snackbarReducer';
 import { Tag } from '../types/artwork';
 import { Auction, Bid, PlaceABidInput } from '../types/auction';
@@ -32,6 +32,7 @@ interface Utils {
   listTag: string[];
   auctionDetail: Auction | undefined;
   listBidDisplay: BidDisplay[];
+  isShowConnectWallet: boolean;
 }
 
 export default function AuctionDetailUtils(auctionId: number): Utils {
@@ -44,7 +45,10 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     isLoading: isLoadingGetUserInfo,
     data: userInfo,
     isFetching: isFetchingGetUserInfo,
+    refetch: getUserInfo,
   } = useQuery('getUserInfo', () => userApi.getUserInfo());
+
+  const isShowConnectWallet = !userInfo?.balence;
 
   const {
     isLoading: isLoadingGetListBid,
@@ -78,7 +82,9 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
       ? formatDate(bidItem?.createdAt, 'DD/MM/YYYY hh:mmA')
       : '',
     isWinner:
-      isSold && Number(bidItem?.id) === Number(auctionDetail?.sessionInformation?.largestBid?.id || ''),
+      isSold &&
+      Number(bidItem?.id) ===
+        Number(auctionDetail?.sessionInformation?.largestBid?.id || ''),
   }));
 
   const {
@@ -87,11 +93,12 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     isSuccess: isSuccessPlaceABid,
     mutate: mutatePlaceABid,
   } = useMutation((input: PlaceABidInput) => auctionApi.placeABid(input), {
-    onSuccess: async () =>{
-      await getAuction();
+    onSuccess: async () => {
+      await Promise.all([getAuction(), getListBid(), getUserInfo()]);
+      dispatch(auctionActions.getListAuction());
     },
     onError: (e: any) => {
-      dispatch(snackbarActions.showSnackbar(e?.message))
+      dispatch(snackbarActions.showSnackbar(e?.message));
     },
   });
 
@@ -114,14 +121,19 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     isLoadingPlaceABid ||
     isLoadingGetListBid ||
     isFetchingGetListBid ||
-    isFetchingGetAuction || 
-    isLoadingGetAuction
-    ;
-
+    isFetchingGetAuction ||
+    isLoadingGetAuction;
   const placeABid = () => {
-    if (Number(priceBidPlaced) <= Number(auctionDetail?.sessionInformation?.largestBid?.bidPrice)) {
+    if (
+      Number(priceBidPlaced) <=
+      Number(auctionDetail?.sessionInformation?.largestBid?.bidPrice)
+    ) {
       setShowModalPlaceBid(false);
-      dispatch(snackbarActions.showSnackbar('Your price must larger the largest bid. Try again.'));
+      dispatch(
+        snackbarActions.showSnackbar(
+          'Your price must larger the largest bid. Try again.',
+        ),
+      );
       return;
     }
     mutatePlaceABid({
@@ -160,5 +172,6 @@ export default function AuctionDetailUtils(auctionId: number): Utils {
     listTag,
     auctionDetail,
     listBidDisplay,
+    isShowConnectWallet,
   };
 }

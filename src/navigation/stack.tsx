@@ -10,14 +10,17 @@ import {
   DetailAuctionScreen,
   ExploreScreen,
   HomeScreen,
-  ProfileScreen
+  ProfileScreen,
 } from '../screens';
 import ConnectWalletScreen from '../screens/home/ConnectWalletScreen';
 import LoginScreen from '../screens/home/LoginSceen';
 import CreateAuctionScreen from '../screens/upload/CreateAuction';
 import UploadArtScreen from '../screens/upload/UploadArtScreen';
 import { selectSessionLogin } from '../store/reducers/authReducer';
-import { selectVisibleSnackbar, snackbarActions } from '../store/reducers/snackbarReducer';
+import {
+  selectVisibleSnackbar,
+  snackbarActions,
+} from '../store/reducers/snackbarReducer';
 import colors from '../utils/colors';
 import screenName from '../utils/screenName';
 import { getAccessToken } from '../utils/storage';
@@ -56,7 +59,7 @@ export const RootStack = () => {
 
   const onDismissSnackBar = () => {
     dispatch(snackbarActions.hideSnackbar());
-  }
+  };
 
   return (
     <>

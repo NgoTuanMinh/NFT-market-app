@@ -17,6 +17,8 @@ export interface User {
   favouriteProduct: Artwork[];
   userInformation: UserInformation;
   balence?: any;
+  uuid?: string;
+  id: number;
 }
 
 export interface UserInformation {

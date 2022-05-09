@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable react-hooks/exhaustive-deps
 
@@ -14,7 +15,7 @@ import {
 import { snackbarActions } from '../store/reducers/snackbarReducer';
 import { selectUser, userActions } from '../store/reducers/userReducer';
 import { Artwork, LikeArtworkInput } from '../types/artwork';
-import { Auction, PlaceABidInput, ViewAuctionInput } from '../types/auction';
+import { Auction, ViewAuctionInput } from '../types/auction';
 import { User } from '../types/authentication';
 import screenName from '../utils/screenName';
 import { getUserData } from '../utils/storage';
@@ -24,6 +25,8 @@ interface Utils {
   goToDetailSold: (id: number) => void;
   checkLikedRecommendAuction: (auction: Auction) => boolean;
   likeArtwork: (input: LikeArtworkInput) => void;
+  isLoading: boolean;
+  isShowConnectWallet: boolean;
 }
 
 export default function HomeUtils(): Utils {
@@ -32,6 +35,8 @@ export default function HomeUtils(): Utils {
 
   const listAuction = useSelector(selectListAuction);
   const userInfoRedux = useSelector(selectUser);
+
+  const isShowConnectWallet = !userInfo?.balence;
 
   useEffect(() => {
     dispatch(auctionActions.getListAuction());
@@ -44,7 +49,7 @@ export default function HomeUtils(): Utils {
     });
     mutateViewAuction({
       auctionSessionId: id,
-    })
+    });
   };
 
   const {
@@ -53,7 +58,7 @@ export default function HomeUtils(): Utils {
     mutate: mutateViewAuction,
   } = useMutation((input: ViewAuctionInput) => auctionApi.viewAuction(input), {
     onError: (e: any) => {
-      dispatch(snackbarActions.showSnackbar(e?.message))
+      dispatch(snackbarActions.showSnackbar(e?.message));
     },
   });
 
@@ -63,13 +68,15 @@ export default function HomeUtils(): Utils {
     mutate: mutateLikeArtwork,
   } = useMutation((input: LikeArtworkInput) => artworkApi.like(input), {
     onError: (e: any) => {
-      dispatch(snackbarActions.showSnackbar(e?.message))
+      dispatch(snackbarActions.showSnackbar(e?.message));
     },
   });
 
   const likeArtwork = (input: LikeArtworkInput) => {
     mutateLikeArtwork(input);
-  }
+  };
+
+  const isLoading = isLoadingLikeArtwork || isLoadingViewAuction;
 
   useEffect(() => {
     handleGetUser();
@@ -103,5 +110,7 @@ export default function HomeUtils(): Utils {
     goToDetailSold,
     checkLikedRecommendAuction,
     likeArtwork,
+    isLoading,
+    isShowConnectWallet,
   };
 }

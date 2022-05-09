@@ -5,7 +5,7 @@ import { saveUserData } from '../../utils/storage';
 import { userActions } from '../reducers/userReducer';
 
 // function* handleCreateAuction(action: PayloadAction<CreateAuctionInput>) {
-//   try {    
+//   try {
 //     yield call(
 //       auctionApi.create,
 //       action.payload,
@@ -20,10 +20,9 @@ import { userActions } from '../reducers/userReducer';
 
 function* getUserInfo() {
   try {
-    const data: User = yield call(
-      userApi.getUserInfo,
-      {relations: ["favouriteProduct", "userInformation"]}
-    );
+    const data: User = yield call(userApi.getUserInfo, {
+      relations: ['favouriteProduct', 'userInformation'],
+    });
     saveUserData(JSON.stringify(data));
     yield put(userActions.getUserSuccess(data));
   } catch (error: any) {

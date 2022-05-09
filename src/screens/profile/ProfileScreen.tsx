@@ -1,18 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native-paper';
+import Avatar from '../../components/common/avatar/Avatar';
 import ButtonCommon from '../../components/common/buttons/commonButton/CommonButton';
-import { authActions } from '../../store/reducers/authReducer';
-import { sizes } from '../../utils/sizings';
+import ProfileUtils from '../../handles/profile.ultil';
+import colors from '../../utils/colors';
+import { fontWeights, sizes } from '../../utils/sizings';
 
 function ProfileScreen() {
-  const dispatch = useDispatch();
+  const profileUtils = ProfileUtils();
 
-  const handleLogout = () => dispatch(authActions.logout());
+  const { handleLogout, isLoading, userInfo } = profileUtils;
+
+  console.log('userInfo======', userInfo);
+
+  if (isLoading) {
+    return <ActivityIndicator animating={true} />;
+  }
 
   return (
     <View style={styles.container}>
-      <Text>Profile screen</Text>
+      <View style={styles.wrapInfo}>
+        <Avatar
+          urlAvatar={userInfo?.userInformation?.profileImage}
+          name={userInfo?.userInformation?.displayName}
+          height={sizes.size_120}
+        />
+        <Text style={styles.textName}>
+          {userInfo?.userInformation?.displayName}
+        </Text>
+        <Text style={styles.textId}>{userInfo?.uuid}</Text>
+      </View>
+
       <ButtonCommon title="Sign out" onPress={handleLogout} />
     </View>
   );
@@ -21,9 +40,25 @@ function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: sizes.size_12,
+  },
+  wrapInfo: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: sizes.size_12,
+    marginVertical: sizes.size_32,
+  },
+  textName: {
+    marginTop: sizes.size_16,
+    fontSize: sizes.size_18,
+    lineHeight: sizes.size_28,
+    fontWeight: fontWeights.fontWeight_700,
+    color: colors.grayBody,
+  },
+  textId: {
+    marginTop: sizes.size_8,
+    fontSize: sizes.size_14,
+    lineHeight: sizes.size_20,
+    color: colors.grayLabel,
   },
 });
 export default ProfileScreen;

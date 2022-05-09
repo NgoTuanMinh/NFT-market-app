@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useMutation } from "react-query";
-import paymentApi from "../api/payment";
-import { PlaceABidInput } from "../types/auction";
-import { UpdateBalenceInput } from "../types/payment";
+import { useState } from 'react';
+import { useMutation } from 'react-query';
+import paymentApi from '../api/payment';
+import { goback } from '../navigation/service';
+import { UpdateBalenceInput } from '../types/payment';
 
 interface Utils {
   onChangeCardNumber: (e: string) => void;
@@ -12,6 +12,7 @@ interface Utils {
   amount: number | undefined;
   setAmount: (e: number) => void;
   submitBalence: () => void;
+  isLoading: boolean;
 }
 
 export default function ConnectWalletUtils(): Utils {
@@ -22,25 +23,31 @@ export default function ConnectWalletUtils(): Utils {
   const onChangeCardNumber = (e: string) => setCardNumber(e);
 
   const submitBalence = () => {
-    if (!amount) return;
+    if (!amount) {
+      return;
+    }
     mutateUpdateBalence({
       amount,
-      cardNumber
-    })
-  }
+      cardNumber,
+    });
+  };
 
   const {
     isLoading: isLoadingUpdateBalence,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isSuccess: isSuccessUpdateBalence,
     mutate: mutateUpdateBalence,
-  } = useMutation((input: UpdateBalenceInput) => paymentApi.updateBalence(input), {
-    onSuccess: () => {
-
+  } = useMutation(
+    (input: UpdateBalenceInput) => paymentApi.updateBalence(input),
+    {
+      onSuccess: () => {
+        goback();
+      },
+      onError: () => {},
     },
-    onError: () => {
+  );
 
-    }
-  });
+  const isLoading = isLoadingUpdateBalence;
 
   return {
     cardNumber,
@@ -50,5 +57,6 @@ export default function ConnectWalletUtils(): Utils {
     amount,
     setAmount,
     submitBalence,
+    isLoading,
   };
 }

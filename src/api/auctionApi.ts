@@ -16,7 +16,7 @@ const auctionApi = {
     return await axiosClient.post(url, input);
   },
   async viewAuction(input: ViewAuctionInput): Promise<Auction> {
-    const url = prefixUrl + '/view-auction';    
+    const url = prefixUrl + '/view-auction';
     return await axiosClient.post(url, input);
   },
   async placeABid(input: PlaceABidInput): Promise<Bid> {
